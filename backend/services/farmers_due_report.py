@@ -1,3 +1,5 @@
+from datetime import date
+
 from sqlalchemy.orm import Session
 
 from models.farmers_due_report import FarmersDueReport
@@ -12,11 +14,8 @@ from schemas.farmers_due_report import (
 # =====================================================
 
 def create_farmers_due_entry(
-
     db: Session,
-
     entry: FarmersDueReportCreate
-
 ):
 
     new_entry = FarmersDueReport(
@@ -39,6 +38,31 @@ def create_farmers_due_entry(
 
     db.refresh(new_entry)
 
+
+    # =================================================
+    # CALCULATE DUE DAYS
+    #
+    # Farmers:
+    #
+    # Due Days = Today - Bill Date
+    #
+    # No negative values
+    # =================================================
+
+    due_days = (
+        date.today() - new_entry.bill_date
+    ).days
+
+
+    if due_days < 0:
+        due_days = 0
+
+
+    # Add calculated value to response object
+
+    new_entry.due_days = due_days
+
+
     return new_entry
 
 
@@ -47,12 +71,10 @@ def create_farmers_due_entry(
 # =====================================================
 
 def get_all_farmers_due_entries(
-
     db: Session
-
 ):
 
-    return db.query(
+    entries = db.query(
 
         FarmersDueReport
 
@@ -61,3 +83,31 @@ def get_all_farmers_due_entries(
         FarmersDueReport.bill_date.desc()
 
     ).all()
+
+
+    # =================================================
+    # CALCULATE DUE DAYS FOR EVERY ENTRY
+    #
+    # Due Days = Today - Bill Date
+    # =================================================
+
+    today = date.today()
+
+
+    for entry in entries:
+
+        due_days = (
+            today - entry.bill_date
+        ).days
+
+
+        # Never allow negative days
+
+        if due_days < 0:
+            due_days = 0
+
+
+        entry.due_days = due_days
+
+
+    return entries

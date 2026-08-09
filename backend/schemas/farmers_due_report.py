@@ -29,7 +29,7 @@ class FarmersDueReportResponse(BaseModel):
 
     id: int
 
-    town: Optional[str]
+    town: Optional[str] = None
 
     account_name: str
 
@@ -38,6 +38,15 @@ class FarmersDueReportResponse(BaseModel):
     bill_no: str
 
     bill_amount: Decimal
+
+    # =================================================
+    # CALCULATED FARMERS DUE DAYS
+    #
+    # Due Days = Today - Bill Date
+    # =================================================
+
+    due_days: int
+
 
     class Config:
 

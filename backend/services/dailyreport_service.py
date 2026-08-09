@@ -11,31 +11,39 @@ from schemas.dailyreport import (
 )
 
 
-# ================= FARMERS REPORT =================
+# =========================================================
+# FARMERS REPORT
+# =========================================================
 
 def get_farmers_report(
     db: Session,
-    report_date: date
+    report_date: date,
+    search: str = ""
 ):
 
-    farmers = (
-
+    query = (
         db.query(FarmersPatti)
-
         .filter(
             FarmersPatti.patti_date == report_date
         )
-
-        .all()
-
     )
+
+    # Search ONLY farmer name
+    if search and search.strip():
+
+        query = query.filter(
+            FarmersPatti.farmer_name.ilike(
+                f"%{search.strip()}%"
+            )
+        )
+
+    farmers = query.all()
 
     report = []
 
     for row in farmers:
 
         report.append(
-
             DailyReportRow(
 
                 bill_no=row.book_no,
@@ -65,37 +73,44 @@ def get_farmers_report(
                 total_bill=row.total_bill or 0
 
             )
-
         )
 
     return report
 
 
-# ================= TRADERS REPORT =================
+# =========================================================
+# TRADERS REPORT
+# =========================================================
 
 def get_traders_report(
     db: Session,
-    report_date: date
+    report_date: date,
+    search: str = ""
 ):
 
-    traders = (
-
+    query = (
         db.query(TradersPatti)
-
         .filter(
             TradersPatti.patti_date == report_date
         )
-
-        .all()
-
     )
+
+    # Search ONLY trader name
+    if search and search.strip():
+
+        query = query.filter(
+            TradersPatti.trader_name.ilike(
+                f"%{search.strip()}%"
+            )
+        )
+
+    traders = query.all()
 
     report = []
 
     for row in traders:
 
         report.append(
-
             DailyReportRow(
 
                 bill_no=row.book_no,
@@ -131,47 +146,42 @@ def get_traders_report(
                 )
 
             )
-
         )
 
     return report
 
 
-# ================= COMPLETE DAILY REPORT =================
+# =========================================================
+# COMPLETE DAILY REPORT
+# =========================================================
 
 def get_daily_report(
     db: Session,
-    report_date: date
+    report_date: date,
+    search: str = ""
 ):
 
     farmers = get_farmers_report(
         db,
-        report_date
+        report_date,
+        search
     )
 
     traders = get_traders_report(
         db,
-        report_date
+        report_date,
+        search
     )
-
 
     farmers_total = sum(
-
         row.total_bill
-
         for row in farmers
-
     )
-
 
     traders_total = sum(
-
         row.total_bill
-
         for row in traders
-
     )
-
 
     return DailyReportResponse(
 

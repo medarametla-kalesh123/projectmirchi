@@ -6,8 +6,17 @@ function DailyReport() {
 
   // ================= STATE =================
 
-  const [reportDate, setReportDate] = useState("");
+ const getToday = () => {
+  const today = new Date();
 
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const [reportDate, setReportDate] = useState(getToday());
   const [reportType, setReportType] = useState("Personal");
 
   const [category, setCategory] = useState("All");
@@ -28,51 +37,142 @@ function DailyReport() {
 
   const handleGenerateReport = async () => {
 
-    if (!reportDate) {
+  if (!reportDate) {
 
-      alert("Please select Report Date.");
+    alert("Please select Report Date.");
 
-      return;
+    return;
+  }
+
+  try {
+
+    const encodedSearch = encodeURIComponent(
+      search.trim()
+    );
+
+    let farmersData = [];
+    let tradersData = [];
+
+    // =====================================================
+    // ALL
+    // =====================================================
+
+    if (category === "All") {
+
+      const farmersResponse = await fetch(
+        `${API}/dailyreport/farmers?report_date=${reportDate}&search=${encodedSearch}`
+      );
+
+      const tradersResponse = await fetch(
+        `${API}/dailyreport/traders?report_date=${reportDate}&search=${encodedSearch}`
+      );
+
+      if (
+        !farmersResponse.ok ||
+        !tradersResponse.ok
+      ) {
+
+        throw new Error(
+          "Failed to fetch report."
+        );
+
+      }
+
+      farmersData =
+        await farmersResponse.json();
+
+      tradersData =
+        await tradersResponse.json();
 
     }
 
-    try {
+    // =====================================================
+    // FARMERS ONLY
+    // =====================================================
+
+    else if (category === "Farmers") {
 
       const response = await fetch(
-
-        `${API}/dailyreport/?report_date=${reportDate}`
-
+        `${API}/dailyreport/farmers?report_date=${reportDate}&search=${encodedSearch}`
       );
 
       if (!response.ok) {
 
-        throw new Error("Failed to fetch report.");
+        throw new Error(
+          "Failed to fetch farmers report."
+        );
 
       }
 
-      const data = await response.json();
+      farmersData =
+        await response.json();
 
-      console.log("Daily Report :", data);
-
-      setFarmers(data.farmers);
-
-      setTraders(data.traders);
-
-      setFarmersTotal(data.farmers_total);
-
-      setTradersTotal(data.traders_total);
+      tradersData = [];
 
     }
 
-    catch (error) {
+    // =====================================================
+    // TRADERS ONLY
+    // =====================================================
 
-      console.log(error);
+    else if (category === "Traders") {
 
-      alert("Unable to load Daily Report.");
+      const response = await fetch(
+        `${API}/dailyreport/traders?report_date=${reportDate}&search=${encodedSearch}`
+      );
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Failed to fetch traders report."
+        );
+
+      }
+
+      tradersData =
+        await response.json();
+
+      farmersData = [];
 
     }
 
-  };
+    // =====================================================
+    // SET DATA
+    // =====================================================
+
+    setFarmers(farmersData);
+
+    setTraders(tradersData);
+
+    setFarmersTotal(
+      farmersData.reduce(
+        (sum, row) =>
+          sum + Number(row.total_bill || 0),
+        0
+      )
+    );
+
+    setTradersTotal(
+      tradersData.reduce(
+        (sum, row) =>
+          sum + Number(row.total_bill || 0),
+        0
+      )
+    );
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    alert(
+      "Unable to load Daily Report."
+    );
+
+  }
+
+};
   const grandTotal =
   Number(farmersTotal) +
   Number(tradersTotal);
@@ -291,6 +391,7 @@ function DailyReport() {
             {/* ========================================================= */}
       {/*                     FARMERS REPORT                        */}
       {/* ========================================================= */}
+       {category !== "Traders" && (
 
       <div className="report-card">
 
@@ -464,10 +565,12 @@ function DailyReport() {
         </div>
 
       </div>
+
+                    )}
             {/* ========================================================= */}
       {/*                     TRADERS REPORT                        */}
       {/* ========================================================= */}
-
+      {category !== "Farmers" && (
       <div className="report-card">
 
         <h3 className="section-title">
@@ -641,6 +744,8 @@ function DailyReport() {
         </div>
 
       </div>
+
+                  )}
             {/* ================= Grand Summary ================= */}
 
       <div className="summary-section">

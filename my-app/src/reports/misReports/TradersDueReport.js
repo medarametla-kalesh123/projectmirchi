@@ -21,6 +21,7 @@ function TradersDueReport({ setPage }) {
   });
 
   const [towns, setTowns] = useState([]);
+  const [accounts,setAccounts]=useState([]);
 
 
   // =========================================================
@@ -30,6 +31,8 @@ function TradersDueReport({ setPage }) {
   useEffect(() => {
 
     loadTradersDueReport();
+     loadAccounts();
+    
     loadTowns();
 
   }, []);
@@ -69,6 +72,38 @@ function TradersDueReport({ setPage }) {
     }
 
   };
+
+
+  const loadAccounts = async () => {
+
+  try {
+
+    const response = await fetch(
+      `${API}/accounts/group/Traders`
+    );
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Failed to load Trader accounts"
+      );
+
+    }
+
+    const data = await response.json();
+
+    setAccounts(data);
+
+  } catch (error) {
+
+    console.error(
+      "Error loading Trader accounts:",
+      error
+    );
+
+  }
+
+};
 
 
   // =========================================================
@@ -115,9 +150,8 @@ function TradersDueReport({ setPage }) {
 
     ...new Set(
 
-      reportData
-
-        .map(row => row.account_name)
+      accounts
+        .map(account => account.account_name)
 
         .filter(Boolean)
 

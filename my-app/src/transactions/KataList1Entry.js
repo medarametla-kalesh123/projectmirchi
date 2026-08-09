@@ -408,11 +408,11 @@ const formattedDate =
 
 setFormData({
   ...emptyForm,
+  entry_no:formData.entry_no,
   entry_date: formattedDate
 });
 
-  loadDefaults();
-
+ 
 };
     return (
 

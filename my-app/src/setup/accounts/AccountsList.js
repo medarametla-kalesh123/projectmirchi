@@ -30,7 +30,15 @@ function AccountsList() {
   const [formData, setFormData] = useState(emptyForm);
   const [accountNameError, setAccountNameError] = useState("");
   const [accountSuggestions, setAccountSuggestions] = useState([]);
+const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
+const filteredAccountSuggestions = accountSuggestions.filter((name) =>
+  name
+    .toLowerCase()
+    .includes(
+      formData.account_name.toLowerCase()
+    )
+);
 
   // ================= LOAD NEXT ACCOUNT NUMBER =================
 
@@ -108,93 +116,131 @@ function AccountsList() {
 };
 
 
-  // ================= HANDLE INPUT CHANGE =================
+// ================= SELECT ACCOUNT =================
 
-  const handleChange = (e) => {
+const handleAccountSelect = (accountName) => {
 
-    const { name, value } = e.target;
-
-
-    // ================= GROUP CHANGE =================
-
-    if (name === "group_name") {
-
-  // Clear previous group's suggestions
-  setAccountSuggestions([]);
-
-  // Clear previous account name
   setFormData(prev => ({
     ...prev,
-    group_name: value,
-    account_name: "",
+    account_name: accountName,
   }));
 
-  // Load suggestions only for selected group
-  loadAccountSuggestions(value);
+  setShowAccountDropdown(false);
 
-  return;
-}
+  setAccountNameError("");
 
+  if (formData.group_name) {
 
-    // ================= ACCOUNT NAME CHANGE =================
+    fetchAccount(
+      formData.group_name,
+      accountName
+    );
 
-    if (name === "account_name") {
+  }
 
-      setFormData(prev => ({
-        ...prev,
-        account_name: value,
-      }));
-
-
-      if (value.trim() === "") {
-
-        setAccountNameError(
-          "Account Name is required"
-        );
-
-        return;
-
-      }
+};
 
 
-      if (/^\d+$/.test(value.trim())) {
+  // ================= HANDLE INPUT CHANGE =================
 
-        setAccountNameError(
-          "Account Name cannot contain only numbers"
-        );
+ const handleChange = (e) => {
 
-        return;
+  const { name, value } = e.target;
 
-      }
 
+  // =====================================================
+  // GROUP CHANGE
+  // =====================================================
+
+  if (name === "group_name") {
+
+    // Clear previous account suggestions
+    setAccountSuggestions([]);
+
+    // Close account dropdown
+    setShowAccountDropdown(false);
+
+    // Clear previous account name
+    setFormData(prev => ({
+      ...prev,
+      group_name: value,
+      account_name: "",
+    }));
+
+    // Load accounts for selected group
+    loadAccountSuggestions(value);
+
+    return;
+
+  }
+
+
+  // =====================================================
+  // ACCOUNT NAME CHANGE
+  // =====================================================
+
+  if (name === "account_name") {
+
+    setFormData(prev => ({
+      ...prev,
+      account_name: value,
+    }));
+
+    // Open dropdown while typing
+    setShowAccountDropdown(true);
+
+
+    // Empty account name
+    if (value.trim() === "") {
 
       setAccountNameError("");
-
-
-      // Search existing account
-      if (formData.group_name) {
-
-        fetchAccount(
-          formData.group_name,
-          value
-        );
-
-      }
 
       return;
 
     }
 
 
-    // ================= OTHER FIELDS =================
+    // Account name cannot contain only numbers
+    if (/^\d+$/.test(value.trim())) {
 
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
+      setAccountNameError(
+        "Account Name cannot contain only numbers"
+      );
 
-  };
+      return;
 
+    }
+
+
+    // Clear error
+    setAccountNameError("");
+
+
+    // Search existing account
+    if (formData.group_name) {
+
+      fetchAccount(
+        formData.group_name,
+        value
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  // =====================================================
+  // OTHER FIELDS
+  // =====================================================
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: value,
+  }));
+
+};
 
   // ================= SEARCH ACCOUNT =================
 
@@ -583,56 +629,153 @@ function AccountsList() {
 
           <div className="field">
 
-            <label>
-              Account Name
-            </label>
+            
+
+{/* ================= ACCOUNT NAME ================= */}
+
+<div className="field account-name-field">
+
+  <label>
+    Account Name
+  </label>
+
+  <div className="account-dropdown-wrapper">
+
+    <div className="account-input-wrapper">
+
+      <input
+        type="text"
+        name="account_name"
+        value={formData.account_name}
+        onChange={handleChange}
+        onFocus={() => {
+
+          if (accountSuggestions.length > 0) {
+            setShowAccountDropdown(true);
+          }
+
+        }}
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
+        placeholder="Search Account Name..."
+      />
+
+      <span
+        className={`account-dropdown-arrow ${
+          showAccountDropdown ? "open" : ""
+        }`}
+        onMouseDown={(e) => {
+
+          e.preventDefault();
+
+          setShowAccountDropdown(
+            !showAccountDropdown
+          );
+
+        }}
+      >
+        ▼
+      </span>
+
+    </div>
 
 
-           <input
-  type="text"
-  name="account_name"
-  value={formData.account_name}
-  onChange={handleChange}
-  list="accountNames"
-  autoComplete="new-password"
-  autoCorrect="off"
-  autoCapitalize="off"
-  spellCheck="false"
-  placeholder="Enter Account Name"
-/>
+    {/* ================= DROPDOWN ================= */}
+
+    {showAccountDropdown && (
+
+      <div className="account-dropdown-menu">
+
+        {/* SEARCH HEADER */}
+
+        <div className="account-dropdown-header">
+
+          <span>
+            {formData.group_name
+              ? `${formData.group_name} Accounts`
+              : "Accounts"}
+          </span>
+
+          <span className="account-count">
+
+            {filteredAccountSuggestions.length}
+
+          </span>
+
+        </div>
 
 
-            <datalist id="accountNames">
+        {/* ACCOUNT LIST */}
 
-              {
-                accountSuggestions.map(
-                  (name, index) => (
+        <div className="account-dropdown-list">
 
-                    <option
-                      key={index}
-                      value={name}
-                    />
+          {filteredAccountSuggestions.length > 0 ? (
 
-                  )
-                )
-              }
+            filteredAccountSuggestions.map(
+              (name, index) => (
 
-            </datalist>
+                <div
+                  key={`${name}-${index}`}
+                  className="account-dropdown-item"
+                  onMouseDown={(e) => {
 
+                    e.preventDefault();
 
-            {
-              accountNameError && (
+                    handleAccountSelect(name);
 
-                <div className="error-text">
+                  }}
+                >
 
-                  {
-                    accountNameError
-                  }
+                  <span className="account-icon">
+                    👤
+                  </span>
+
+                  <span className="account-name-text">
+                    {name}
+                  </span>
 
                 </div>
 
               )
-            }
+            )
+
+          ) : (
+
+            <div className="account-no-results">
+
+              {formData.account_name
+                ? "No matching accounts found"
+                : "No accounts available"}
+
+            </div>
+
+          )}
+
+        </div>
+
+      </div>
+
+    )}
+
+  </div>
+
+
+  {/* ERROR */}
+
+  {accountNameError && (
+
+    <div className="error-text">
+
+      {accountNameError}
+
+    </div>
+
+  )}
+
+</div>
+
 
           </div>
 
