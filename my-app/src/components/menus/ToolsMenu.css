@@ -1,0 +1,167 @@
+/* =========================================================
+   TOOLS MENU
+========================================================= */
+
+.tools-nav-item {
+    position: relative;
+}
+
+
+/* =========================================================
+   DROPDOWN
+   Desktop layout remains the same
+========================================================= */
+
+.tools-dropdown {
+    position: absolute;
+
+    top: 45px;
+    left: 0;
+
+    min-width: 240px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5d5d5;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    z-index: 9999;
+
+    padding: 0;
+
+    border-radius: 0;
+}
+
+
+/* =========================================================
+   DROPDOWN ITEMS
+========================================================= */
+
+.tools-dropdown .dropdown-item {
+    padding: 10px 15px;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    font-size: 14px;
+
+    color: #333;
+
+    transition: 0.2s;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.tools-dropdown .dropdown-item:hover {
+    background: #f0f4ff;
+
+    color: #1f3c88;
+}
+
+
+/* =========================================================
+   HORIZONTAL SEPARATOR
+========================================================= */
+
+.tools-dropdown hr {
+    border: none;
+
+    border-top: 1px solid #ddd;
+
+    margin: 4px 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .tools-nav-item {
+        position: relative;
+    }
+
+
+    /* =====================================================
+       TOOLS DROPDOWN
+    ===================================================== */
+
+    .tools-dropdown {
+
+        top: 45px;
+
+        left: 0;
+
+        min-width: 210px;
+
+        max-width: 260px;
+
+        background: #ffffff;
+
+        border: 1px solid #d5d5d5;
+
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        z-index: 99999;
+
+        overflow: visible;
+    }
+
+
+    /* =====================================================
+       MOBILE ITEMS
+    ===================================================== */
+
+    .tools-dropdown .dropdown-item {
+
+        padding: 11px 14px;
+
+        font-size: 14px;
+
+        min-height: 40px;
+
+        display: flex;
+
+        align-items: center;
+
+        white-space: nowrap;
+
+        cursor: pointer;
+
+        color: #333;
+
+        background: #ffffff;
+    }
+
+
+    /* =====================================================
+       TOUCH
+    ===================================================== */
+
+    .tools-dropdown .dropdown-item:active {
+
+        background: #f0f4ff;
+
+        color: #1f3c88;
+    }
+
+
+    /* =====================================================
+       SEPARATOR
+    ===================================================== */
+
+    .tools-dropdown hr {
+
+        margin: 4px 0;
+
+        border-top: 1px solid #ddd;
+    }
+}

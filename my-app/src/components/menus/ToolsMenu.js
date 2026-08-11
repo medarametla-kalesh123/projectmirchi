@@ -1,136 +1,253 @@
-import React, { useState } from "react";
+import React from "react";
+import "./ToolsMenu.css";
 
-function ToolsMenu({ changePage }) {
+function ToolsMenu({
+    changePage,
+    isOpen,
+    openMenu,
+    closeMenu,
+    toggleMenu
+}) {
 
-  const [toolsOpen, setToolsOpen] = useState(false);
+    // =====================================================
+    // CHANGE PAGE
+    // =====================================================
 
-  const handleChangePage = (page) => {
-    setToolsOpen(false);
-    changePage(page);
-  };
+    const handleChangePage = (page) => {
+        changePage(page);
+    };
 
-  return (
 
-    <div
-      className="nav-item"
-      onMouseEnter={() => setToolsOpen(true)}
-      onMouseLeave={() => setToolsOpen(false)}
-    >
+    // =====================================================
+    // TOOLS BUTTON CLICK
+    // MOBILE  -> OPEN / CLOSE DROPDOWN
+    // DESKTOP -> NORMAL PAGE NAVIGATION
+    // =====================================================
 
-      <button
-        className="menu-btn"
-        onClick={() => handleChangePage("tools")}
-      >
-        Tools
-      </button>
+    const handleToolsClick = () => {
 
-      {toolsOpen && (
+        if (window.innerWidth <= 768) {
 
-        <div className="dropdown">
+            toggleMenu();
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("engtotel")}
-          >
-            Eng to Tel
-          </div>
+        } else {
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("calculator")}
-          >
-            Calculator
-          </div>
+            changePage("tools");
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("calendar")}
-          >
-            Calendar
-          </div>
+        }
+    };
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("interestcalculator")}
-          >
-            Interest Calculator
-          </div>
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("printersetup")}
-          >
-            Printer Setup
-          </div>
+    return (
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("changecompany")}
-          >
-            Change Company
-          </div>
+        <div
+            className="nav-item tools-nav-item"
 
-          <hr />
+            onMouseEnter={() => {
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("backuprestore")}
-          >
-            Backup Restore
-          </div>
+                if (window.innerWidth > 768) {
+                    openMenu();
+                }
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("auditreport")}
-          >
-            Audit Report
-          </div>
+            }}
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("password")}
-          >
-            Passwords
-          </div>
+            onMouseLeave={() => {
 
-          <hr />
+                if (window.innerWidth > 768) {
+                    closeMenu();
+                }
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("repostingledger")}
-          >
-            Reposting Ledger
-          </div>
+            }}
+        >
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("toolstandardnarrations")}
-          >
-            Standard Narrations
-          </div>
+            {/* =================================================
+                TOOLS BUTTON
+            ================================================= */}
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("reportviewer")}
-          >
-            Report Viewer
-          </div>
+            <button
+                className="menu-btn"
+                onClick={handleToolsClick}
+            >
+                Tools
 
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("databaseverification")}
-          >
-            Database Verification
-          </div>
+                {/* MOBILE ARROW */}
+
+                <span className="mobile-arrow">
+                    {isOpen ? "▲" : "▼"}
+                </span>
+
+            </button>
+
+
+            {/* =================================================
+                TOOLS DROPDOWN
+            ================================================= */}
+
+            {isOpen && (
+
+                <div className="dropdown tools-dropdown">
+
+                    {/* =================================================
+                        MAIN TOOLS
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("engtotel")
+                        }
+                    >
+                        Eng to Tel
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("calculator")
+                        }
+                    >
+                        Calculator
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("calendar")
+                        }
+                    >
+                        Calendar
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("interestcalculator")
+                        }
+                    >
+                        Interest Calculator
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("printersetup")
+                        }
+                    >
+                        Printer Setup
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("changecompany")
+                        }
+                    >
+                        Change Company
+                    </div>
+
+
+                    {/* =================================================
+                        SEPARATOR
+                    ================================================= */}
+
+                    <hr />
+
+
+                    {/* =================================================
+                        SYSTEM TOOLS
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("backuprestore")
+                        }
+                    >
+                        Backup Restore
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("auditreport")
+                        }
+                    >
+                        Audit Report
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("password")
+                        }
+                    >
+                        Passwords
+                    </div>
+
+
+                    {/* =================================================
+                        SEPARATOR
+                    ================================================= */}
+
+                    <hr />
+
+
+                    {/* =================================================
+                        OTHER TOOLS
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("repostingledger")
+                        }
+                    >
+                        Reposting Ledger
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("toolstandardnarrations")
+                        }
+                    >
+                        Standard Narrations
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("reportviewer")
+                        }
+                    >
+                        Report Viewer
+                    </div>
+
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("databaseverification")
+                        }
+                    >
+                        Database Verification
+                    </div>
+
+                </div>
+
+            )}
 
         </div>
-
-      )}
-
-    </div>
-
-  );
-
+    );
 }
 
 export default ToolsMenu;

@@ -1,84 +1,711 @@
-/* Full Screen Background */
+/* =========================================================
+   MIRCHI TRADING AUTHENTICATION
+========================================================= */
 
-.login-page{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#d9f2d9,#f5fff5);
+* {
+    box-sizing: border-box;
 }
 
-/* Login Box */
 
-.login-page form{
-    width:350px;
-    background:#fff;
-    padding:40px 30px;
-    border-radius:15px;
-    box-shadow:0 8px 25px rgba(0,0,0,0.15);
-    display:flex;
-    flex-direction:column;
+.auth-page {
+
+    min-height: 100vh;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8f8f8,
+            #eeeeee
+        );
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
-/* Heading */
 
-.login-page h2{
-    text-align:center;
-    margin-bottom:30px;
-    color:#c62828;
-    font-size:30px;
-    font-weight:bold;
+/* =========================================================
+   CARD
+========================================================= */
+
+.auth-card {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    min-height: 680px;
+
+    display: flex;
+
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.15);
 }
 
-/* Input Fields */
 
-.login-page input{
-    width:100%;
-    padding:14px;
-    margin-bottom:20px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-    outline:none;
-    box-sizing:border-box;
-    transition:.3s;
+/* =========================================================
+   LEFT BRAND
+========================================================= */
+
+.auth-brand {
+
+    width: 38%;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            160deg,
+            #b30000,
+            #d40000 45%,
+            #720000
+        );
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
 }
 
-.login-page input:focus{
-    border-color:#2e7d32;
-    box-shadow:0 0 5px rgba(46,125,50,.3);
+
+.auth-brand::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,0.12),
+            transparent 35%
+        );
+
+    pointer-events: none;
 }
 
-/* Login Button */
 
-.login-page button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:8px;
-    background:#2e7d32;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
+.brand-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    padding: 45px 35px;
 }
 
-.login-page button:hover{
-    background:#1b5e20;
+
+.chilli-logo {
+
+    width: 105px;
+
+    height: 105px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    font-size: 54px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.2);
 }
 
-/* Responsive */
 
-@media(max-width:450px){
+.brand-content h1 {
 
-    .login-page form{
-        width:90%;
-        padding:30px 20px;
+    margin: 0;
+
+    font-size: 42px;
+
+    letter-spacing: 4px;
+
+    font-weight: 800;
+}
+
+
+.brand-content h2 {
+
+    margin: 4px 0 15px;
+
+    font-size: 23px;
+
+    letter-spacing: 8px;
+
+    font-weight: 400;
+}
+
+
+.brand-line {
+
+    width: 70px;
+
+    height: 3px;
+
+    background: white;
+
+    margin: 20px auto;
+}
+
+
+.brand-tagline {
+
+    font-size: 19px;
+
+    line-height: 1.5;
+
+    font-weight: 600;
+
+    margin-bottom: 38px;
+}
+
+
+.brand-features {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    text-align: left;
+
+    max-width: 250px;
+
+    margin: auto;
+}
+
+
+.brand-features div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 14px;
+}
+
+
+.brand-features span {
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.18);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.chilli-decoration {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 0;
+
+    width: 100%;
+
+    font-size: 48px;
+
+    opacity: 0.55;
+
+    letter-spacing: -10px;
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.auth-form-section {
+
+    width: 62%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: white;
+
+    padding: 45px 65px;
+}
+
+
+.auth-form {
+
+    width: 100%;
+
+    max-width: 480px;
+}
+
+
+.auth-form h2 {
+
+    margin: 0;
+
+    text-align: center;
+
+    color: #171717;
+
+    font-size: 32px;
+
+    font-weight: 700;
+}
+
+
+.auth-subtitle {
+
+    text-align: center;
+
+    color: #707070;
+
+    font-size: 15px;
+
+    margin:
+        10px 0 12px;
+}
+
+
+.auth-red-line {
+
+    width: 45px;
+
+    height: 3px;
+
+    background: #d40000;
+
+    margin:
+        0 auto 28px;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group {
+
+    margin-bottom: 18px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #222;
+
+    margin-bottom: 7px;
+}
+
+
+.input-wrapper {
+
+    height: 52px;
+
+    width: 100%;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    background: white;
+
+    transition: 0.2s;
+}
+
+
+.input-wrapper:focus-within {
+
+    border-color: #d40000;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,0,0,0.08);
+}
+
+
+.input-icon {
+
+    width: 48px;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+
+.input-wrapper input {
+
+    flex: 1;
+
+    height: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 14px;
+
+    color: #222;
+
+    background: transparent;
+}
+
+
+.input-wrapper input::placeholder {
+
+    color: #9b9b9b;
+}
+
+
+.password-toggle {
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0 15px;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+.forgot-password {
+
+    text-align: right;
+
+    margin:
+        -5px 0 20px;
+}
+
+
+.forgot-password button {
+
+    border: none;
+
+    background: none;
+
+    color: #d40000;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.auth-button {
+
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c40000,
+            #e00000
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    box-shadow:
+        0 5px 15px
+        rgba(212,0,0,0.2);
+}
+
+
+.auth-button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(212,0,0,0.28);
+}
+
+
+.auth-button:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.auth-error {
+
+    background: #fff0f0;
+
+    border: 1px solid #ffcaca;
+
+    color: #c00000;
+
+    border-radius: 8px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+
+.auth-success {
+
+    background: #eefaf0;
+
+    border: 1px solid #c8e7ce;
+
+    color: #218838;
+
+    border-radius: 8px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SWITCH
+========================================================= */
+
+.switch-auth {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    margin-top: 25px;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+.switch-auth button {
+
+    border: none;
+
+    background: none;
+
+    color: #d00000;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.auth-footer {
+
+    text-align: center;
+
+    margin-top: 35px;
+
+    font-size: 12px;
+
+    color: #999;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .auth-page {
+
+        padding: 15px;
     }
 
-    .login-page h2{
-        font-size:26px;
+
+    .auth-card {
+
+        flex-direction: column;
+
+        max-width: 550px;
     }
 
+
+    .auth-brand {
+
+        width: 100%;
+
+        min-height: 280px;
+    }
+
+
+    .brand-content {
+
+        padding: 30px;
+    }
+
+
+    .chilli-logo {
+
+        width: 70px;
+
+        height: 70px;
+
+        font-size: 38px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .brand-content h1 {
+
+        font-size: 30px;
+    }
+
+
+    .brand-content h2 {
+
+        font-size: 17px;
+    }
+
+
+    .brand-tagline {
+
+        margin-bottom: 10px;
+    }
+
+
+    .brand-features {
+
+        display: none;
+    }
+
+
+    .chilli-decoration {
+
+        display: none;
+    }
+
+
+    .auth-form-section {
+
+        width: 100%;
+
+        padding: 40px 30px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .auth-form-section {
+
+        padding: 30px 20px;
+    }
+
+
+    .auth-form h2 {
+
+        font-size: 27px;
+    }
 }

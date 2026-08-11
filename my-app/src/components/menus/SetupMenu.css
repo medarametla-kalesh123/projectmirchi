@@ -1,0 +1,347 @@
+/* =========================================================
+   SETUP MENU
+========================================================= */
+
+.setup-nav-item {
+    position: relative;
+}
+
+
+/* =========================================================
+   MOBILE ARROW
+========================================================= */
+
+.mobile-arrow {
+    display: none;
+
+    margin-left: 6px;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   ACCOUNTS ARROW
+========================================================= */
+
+.submenu-arrow {
+    margin-left: auto;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MAIN DROPDOWN
+========================================================= */
+
+.setup-nav-item .dropdown {
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+
+    min-width: 210px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.18);
+
+    z-index: 9999;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   DROPDOWN ITEM
+========================================================= */
+
+.setup-nav-item .dropdown-item {
+    padding: 11px 15px;
+
+    background: #ffffff;
+
+    color: #222222;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    white-space: nowrap;
+
+    min-height: 38px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* =========================================================
+   DROPDOWN ITEM HOVER
+========================================================= */
+
+.setup-nav-item .dropdown-item:hover {
+    background: #f0f4ff;
+
+    color: #263f91;
+}
+
+
+/* =========================================================
+   ACCOUNTS
+========================================================= */
+
+.setup-nav-item .submenu-item {
+    position: relative;
+}
+
+
+/* =========================================================
+   DESKTOP SUBMENU
+========================================================= */
+
+.setup-nav-item .submenu {
+    position: absolute;
+
+    left: 100%;
+    top: 0;
+
+    min-width: 210px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.18);
+
+    z-index: 10000;
+
+    padding: 0;
+
+    margin: 0;
+
+    display: none;
+}
+
+
+/* =========================================================
+   DESKTOP SHOW ACCOUNTS SUBMENU
+
+   Accounts submenu is shown when Accounts area
+   is hovered on desktop.
+========================================================= */
+
+@media (min-width: 769px) {
+
+    .setup-nav-item .submenu-item:hover > .submenu {
+        display: block;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    /* -----------------------------------------------------
+       SHOW MOBILE ARROW
+    ----------------------------------------------------- */
+
+    .mobile-arrow {
+        display: inline-block;
+    }
+
+
+    /* -----------------------------------------------------
+       SETUP DROPDOWN
+    ----------------------------------------------------- */
+
+    .setup-nav-item .dropdown {
+        position: absolute;
+
+        top: 100%;
+        left: 0;
+
+        width: 210px;
+
+        min-width: 210px;
+
+        max-width: calc(100vw - 20px);
+
+        background: #ffffff;
+
+        border: 1px solid #dddddd;
+
+        box-shadow:
+            0 5px 15px rgba(0, 0, 0, 0.18);
+
+        z-index: 99999;
+
+        overflow: visible;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE DROPDOWN ITEMS
+    ----------------------------------------------------- */
+
+    .setup-nav-item .dropdown > .dropdown-item {
+
+        padding: 13px 15px;
+
+        min-height: 42px;
+
+        font-size: 14px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       ACCOUNTS ITEM
+    ----------------------------------------------------- */
+
+    .setup-nav-item .accounts-item {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
+       ACCOUNTS SUBMENU
+
+       On mobile it appears BELOW Accounts.
+    ----------------------------------------------------- */
+
+    .setup-nav-item .submenu {
+
+        position: static;
+
+        width: 100%;
+
+        min-width: 0;
+
+        border: none;
+
+        box-shadow: none;
+
+        background: #f7f8fc;
+
+        display: none;
+
+        margin: 0;
+
+        padding: 0;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE SUBMENU OPEN
+
+       This class is added by SetupMenu.js when
+       Accounts is clicked.
+    ----------------------------------------------------- */
+
+    .setup-nav-item .submenu.mobile-submenu-open {
+
+        display: block;
+    }
+
+
+    /* -----------------------------------------------------
+       SUBMENU ITEMS
+    ----------------------------------------------------- */
+
+    .setup-nav-item .submenu .dropdown-item {
+
+        padding: 12px 15px 12px 30px;
+
+        min-height: 40px;
+
+        font-size: 13px;
+
+        background: #f7f8fc;
+
+        color: #333333;
+
+    }
+
+
+    /* -----------------------------------------------------
+       SUBMENU HOVER
+    ----------------------------------------------------- */
+
+    .setup-nav-item .submenu .dropdown-item:hover {
+
+        background: #e9edfa;
+
+        color: #263f91;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE ACCOUNTS ARROW
+    ----------------------------------------------------- */
+
+    .setup-nav-item .submenu-arrow {
+
+        font-size: 10px;
+
+        margin-left: auto;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .setup-nav-item .dropdown {
+
+        width: 205px;
+
+        min-width: 205px;
+
+        max-width: calc(100vw - 10px);
+    }
+
+
+    .setup-nav-item .dropdown-item {
+
+        font-size: 13px;
+    }
+
+
+    .setup-nav-item .submenu .dropdown-item {
+
+        font-size: 13px;
+
+        padding-left: 28px;
+    }
+
+}

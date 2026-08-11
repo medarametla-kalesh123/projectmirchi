@@ -1,0 +1,77 @@
+@import "./Login.css";
+
+
+.register-form {
+
+    max-width: 500px;
+}
+
+
+.register-form .auth-red-line {
+
+    margin-bottom: 20px;
+}
+
+
+.register-form .form-group {
+
+    margin-bottom: 13px;
+}
+
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.terms-row {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin:
+        5px 0 18px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #666;
+}
+
+
+.terms-row input {
+
+    width: 16px;
+
+    height: 16px;
+
+    margin-top: 1px;
+
+    accent-color: #d00000;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+.terms-row b {
+
+    color: #d00000;
+}
+
+
+/* =========================================================
+   REGISTER MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .register-form .form-group {
+
+        margin-bottom: 15px;
+    }
+}

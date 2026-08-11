@@ -81,12 +81,124 @@ import ReportViewer from "./tools/ReportViewer";
 import DatabaseVerification from "./tools/DatabaseVerification";
 
 
+import Login from "./pages/Login";
+import Register from "./pages/Register"
+
+
+
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+
+
 
 
 function App() {
 
-  const [page, setPage] = useState("dashboard");
+    const [page, setPageState] = useState(() => {
 
+        // =====================================================
+        // RESET PASSWORD LINK
+        // =====================================================
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const token = params.get("token");
+
+        if (token) {
+            return "reset-password";
+        }
+
+
+        // =====================================================
+        // CHECK LOGIN STATUS
+        // =====================================================
+
+        const isLoggedIn =
+            localStorage.getItem("isLoggedIn") === "true";
+
+
+        // =====================================================
+        // NOT LOGGED IN
+        // =====================================================
+
+        if (!isLoggedIn) {
+            return "login";
+        }
+
+
+        // =====================================================
+        // RESTORE LAST PAGE
+        // =====================================================
+
+        const savedPage =
+            localStorage.getItem("currentPage");
+
+
+        return savedPage || "dashboard";
+    });
+
+
+    // =========================================================
+    // PAGE NAVIGATION
+    // =========================================================
+
+    const setPage = (newPage) => {
+
+        setPageState(newPage);
+
+
+        // -----------------------------------------------------
+        // Save current page
+        // -----------------------------------------------------
+
+        localStorage.setItem(
+            "currentPage",
+            newPage
+        );
+    };
+    // =====================================================
+    // LOGIN PAGE
+    // =====================================================
+
+    if (page === "login") {
+        return (
+            <Login setPage={setPage} />
+        );
+    }
+
+
+    // =====================================================
+    // REGISTER PAGE
+    // =====================================================
+
+    if (page === "register") {
+        return (
+            <Register setPage={setPage} />
+        );
+    }
+ 
+    // =====================================================
+// FORGOT PASSWORD PAGE
+// =====================================================
+
+if (page === "forgot-password") {
+    return (
+        <ForgotPassword setPage={setPage} />
+    );
+}
+
+
+// =====================================================
+// RESET PASSWORD PAGE
+// =====================================================
+
+if (page === "reset-password") {
+    return (
+        <ResetPassword setPage={setPage} />
+    );
+}
   
 
   return (
@@ -94,8 +206,9 @@ function App() {
       <Navbar setPage={setPage} />
 
       
-      {page === "exit" && <Exit />}
-
+    {page === "exit" && (
+    <Exit setPage={setPage} />
+)}
       {page === "accountslist" && <AccountsList />}
       {page === "standardnarrations" && <StandardNarrations />}
       {page === "nameverification" && <NameVerification />}

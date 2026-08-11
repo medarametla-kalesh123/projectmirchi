@@ -1,130 +1,263 @@
-import React, { useState } from "react";
+import React from "react";
+import "./SetupMenu.css";
 
-function SetupMenu({ changePage }) {
+function SetupMenu({
+    changePage,
+    isOpen,
+    openMenu,
+    closeMenu,
+    toggleMenu
+}) {
 
-  const [setupOpen, setSetupOpen] = useState(false);
-  const [accountsOpen, setAccountsOpen] = useState(false);
+    const isMobile = () => {
+        return window.innerWidth <= 768;
+    };
 
-  const handleChangePage = (page) => {
-    setSetupOpen(false);
-    setAccountsOpen(false);
+    // =====================================================
+    // SETUP BUTTON CLICK
+    // =====================================================
 
-    changePage(page);
-  };
+    const handleSetupClick = () => {
 
-  return (
+        if (isMobile()) {
 
-    <div
-      className="nav-item"
-      onMouseEnter={() => setSetupOpen(true)}
-      onMouseLeave={() => {
-        setSetupOpen(false);
-        setAccountsOpen(false);
-      }}
-    >
+            toggleMenu();
 
-      <button
-        className="menu-btn"
-        onClick={() => handleChangePage("setup")}
-      >
-        Setup
-      </button>
+        } else {
 
-      {setupOpen && (
+            changePage("setup");
 
-        <div className="dropdown">
+        }
+    };
 
-          <div
-            className="submenu-item"
-            onMouseEnter={() => setAccountsOpen(true)}
-            onMouseLeave={() => setAccountsOpen(false)}
-          >
+    // =====================================================
+    // PAGE CHANGE
+    // =====================================================
 
-            <div className="dropdown-item">
-              Accounts
-            </div>
+    const handleChangePage = (page) => {
 
-            {accountsOpen && (
+        changePage(page);
 
-              <div className="submenu">
+    };
 
-                <div
-                  className="dropdown-item"
-                  onClick={() => handleChangePage("accountslist")}
-                >
-                  Accounts List
+    return (
+
+        <div
+            className="nav-item setup-nav-item"
+
+            onMouseEnter={() => {
+
+                if (!isMobile()) {
+                    openMenu();
+                }
+
+            }}
+
+            onMouseLeave={() => {
+
+                if (!isMobile()) {
+                    closeMenu();
+                }
+
+            }}
+        >
+
+            {/* =================================================
+                SETUP BUTTON
+            ================================================= */}
+
+            <button
+                className="menu-btn setup-menu-button"
+                onClick={handleSetupClick}
+            >
+
+                Setup
+
+                <span className="mobile-arrow">
+                    {isOpen ? "▲" : "▼"}
+                </span>
+
+            </button>
+
+
+            {/* =================================================
+                SETUP DROPDOWN
+            ================================================= */}
+
+            {isOpen && (
+
+                <div className="dropdown">
+
+                    {/* =================================================
+                        ACCOUNTS
+                    ================================================= */}
+
+                    <div className="submenu-item">
+
+                        <div
+                            className="dropdown-item accounts-item"
+                            onClick={(e) => {
+
+                                e.stopPropagation();
+
+                                if (isMobile()) {
+
+                                    const submenu =
+                                        e.currentTarget.parentElement.querySelector(
+                                            ".submenu"
+                                        );
+
+                                    if (submenu) {
+                                        submenu.classList.toggle(
+                                            "mobile-submenu-open"
+                                        );
+                                    }
+
+                                }
+
+                            }}
+                        >
+
+                            <span>
+                                Accounts
+                            </span>
+
+                            <span className="submenu-arrow">
+                                ▶
+                            </span>
+
+                        </div>
+
+
+                        {/* =================================================
+                            ACCOUNTS SUBMENU
+                        ================================================= */}
+
+                        <div className="submenu">
+
+                            <div
+                                className="dropdown-item"
+                                onClick={() =>
+                                    handleChangePage("accountslist")
+                                }
+                            >
+                                Accounts List
+                            </div>
+
+
+                            <div
+                                className="dropdown-item"
+                                onClick={() =>
+                                    handleChangePage("standardnarrations")
+                                }
+                            >
+                                Standard Narrations
+                            </div>
+
+
+                            <div
+                                className="dropdown-item"
+                                onClick={() =>
+                                    handleChangePage("nameverification")
+                                }
+                            >
+                                Name Verification
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* =================================================
+                        STATES
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("states")
+                        }
+                    >
+                        States
+                    </div>
+
+
+                    {/* =================================================
+                        TOWNS
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("towns")
+                        }
+                    >
+                        Towns
+                    </div>
+
+
+                    {/* =================================================
+                        EDIT ADDRESSES
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("editaddresses")
+                        }
+                    >
+                        Edit Addresses
+                    </div>
+
+
+                    {/* =================================================
+                        STANDARD ACCOUNTS
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("standardaccounts")
+                        }
+                    >
+                        Standard Accounts
+                    </div>
+
+
+                    {/* =================================================
+                        GROUP CREATION
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("groupcreation")
+                        }
+                    >
+                        Group Creation
+                    </div>
+
+
+                    {/* =================================================
+                        CLASSIC MENU
+                    ================================================= */}
+
+                    <div
+                        className="dropdown-item"
+                        onClick={() =>
+                            handleChangePage("classicmenu")
+                        }
+                    >
+                        Classic Menu
+                    </div>
+
                 </div>
-
-                <div
-                  className="dropdown-item"
-                  onClick={() => handleChangePage("standardnarrations")}
-                >
-                  Standard Narrations
-                </div>
-
-                <div
-                  className="dropdown-item"
-                  onClick={() => handleChangePage("nameverification")}
-                >
-                  Name Verification
-                </div>
-
-              </div>
 
             )}
 
-          </div>
-
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("states")}
-          >
-            States
-          </div>
-
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("towns")}
-          >
-            Towns
-          </div>
-
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("editaddresses")}
-          >
-            Edit Addresses
-          </div>
-
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("standardaccounts")}
-          >
-            Standard Accounts
-          </div>
-
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("groupcreation")}
-          >
-            Group Creation
-          </div>
-
-          <div
-            className="dropdown-item"
-            onClick={() => handleChangePage("classicmenu")}
-          >
-            Classic Menu
-          </div>
-
         </div>
-
-      )}
-
-    </div>
-
-  );
-
+    );
 }
 
 export default SetupMenu;

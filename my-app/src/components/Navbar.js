@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
 
 import SetupMenu from "./menus/SetupMenu";
@@ -8,32 +8,125 @@ import ToolsMenu from "./menus/ToolsMenu";
 
 function Navbar({ setPage }) {
 
-  const changePage = (pageName) => {
-    setPage(pageName);
-  };
+    const [activeMenu, setActiveMenu] = useState(null);
 
-  return (
+    // =====================================================
+    // CHANGE PAGE
+    // =====================================================
 
-    <nav className="navbar">
+    const changePage = (pageName) => {
+        setPage(pageName);
+        setActiveMenu(null);
+    };
 
-      <SetupMenu changePage={changePage} />
+    // =====================================================
+    // OPEN MENU
+    // =====================================================
 
-      <button
-        className="menu-btn"
-        onClick={() => changePage("items")}
-      >
-        Items
-      </button>
+    const openMenu = (menuName) => {
+        setActiveMenu(menuName);
+    };
 
-      <TransactionMenu changePage={changePage} />
+    // =====================================================
+    // CLOSE MENU
+    // =====================================================
 
-      <ReportsMenu changePage={changePage} />
+    const closeMenu = (menuName) => {
+        setActiveMenu(prev =>
+            prev === menuName ? null : prev
+        );
+    };
 
-      <ToolsMenu changePage={changePage} />
+    // =====================================================
+    // TOGGLE MENU
+    // =====================================================
 
-    </nav>
+    const toggleMenu = (menuName) => {
+        setActiveMenu(prev =>
+            prev === menuName ? null : menuName
+        );
+    };
 
-  );
+    return (
+        <nav className="navbar">
+
+            {/* =================================================
+                SETUP
+            ================================================= */}
+
+            <SetupMenu
+                changePage={changePage}
+                isOpen={activeMenu === "setup"}
+                openMenu={() => openMenu("setup")}
+                closeMenu={() => closeMenu("setup")}
+                toggleMenu={() => toggleMenu("setup")}
+            />
+
+
+            {/* =================================================
+                ITEMS
+            ================================================= */}
+
+            <button
+                className="menu-btn"
+                onClick={() => changePage("items")}
+            >
+                Items
+            </button>
+
+
+            {/* =================================================
+                TRANSACTIONS
+            ================================================= */}
+
+            <TransactionMenu
+                changePage={changePage}
+                isOpen={activeMenu === "transactions"}
+                openMenu={() => openMenu("transactions")}
+                closeMenu={() => closeMenu("transactions")}
+                toggleMenu={() => toggleMenu("transactions")}
+            />
+
+
+            {/* =================================================
+                REPORTS
+            ================================================= */}
+
+            <ReportsMenu
+                changePage={changePage}
+                isOpen={activeMenu === "reports"}
+                openMenu={() => openMenu("reports")}
+                closeMenu={() => closeMenu("reports")}
+                toggleMenu={() => toggleMenu("reports")}
+            />
+
+
+            {/* =================================================
+                TOOLS
+            ================================================= */}
+
+            <ToolsMenu
+                changePage={changePage}
+                isOpen={activeMenu === "tools"}
+                openMenu={() => openMenu("tools")}
+                closeMenu={() => closeMenu("tools")}
+                toggleMenu={() => toggleMenu("tools")}
+            />
+
+
+            {/* =================================================
+                EXIT
+            ================================================= */}
+
+            <button
+                className="menu-btn exit-menu-btn"
+                onClick={() => changePage("exit")}
+            >
+                Exit
+            </button>
+
+        </nav>
+    );
 }
 
 export default Navbar;

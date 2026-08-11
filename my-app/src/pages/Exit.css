@@ -1,11 +1,757 @@
-.page{
+/* =========================================================
+   MIRCHI TRADING
+   PROFESSIONAL EXIT PAGE
+========================================================= */
 
-    padding:40px;
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.exit-page {
+
+    min-height: calc(100vh - 60px);
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 35px 25px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f7fa 0%,
+            #eef1f6 50%,
+            #f8f9fb 100%
+        );
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.exit-card {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    box-sizing: border-box;
+
+    padding: 42px 48px 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e6eb;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.10),
+        0 4px 12px rgba(15, 23, 42, 0.05);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.exit-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 11px;
+}
+
+
+.exit-logo {
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #fff1f1;
+
+    border: 1px solid #ffd4d4;
+
+    border-radius: 11px;
+
+    font-size: 27px;
+
+    box-sizing: border-box;
+}
+
+
+.exit-brand-text {
+
+    text-align: left;
+}
+
+
+.exit-brand-name {
+
+    color: #b40000;
+
+    font-size: 23px;
+
+    line-height: 22px;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+}
+
+
+.exit-brand-subtitle {
+
+    margin-top: 3px;
+
+    color: #656b74;
+
+    font-size: 11px;
+
+    line-height: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 5px;
+}
+
+
+/* =========================================================
+   RED LINE
+========================================================= */
+
+.exit-red-line {
+
+    width: 58px;
+
+    height: 3px;
+
+    margin: 20px auto 25px;
+
+    border-radius: 10px;
+
+    background: #c80000;
+}
+
+
+/* =========================================================
+   EXIT ICON
+========================================================= */
+
+.exit-icon-circle {
+
+    width: 76px;
+
+    height: 76px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff5f5;
+
+    border: 1px solid #ffdede;
+
+    box-sizing: border-box;
+}
+
+
+.exit-icon {
+
+    width: 57px;
+
+    height: 57px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    background: #c80000;
+
+    font-size: 31px;
+
+    font-weight: 500;
+
+    box-shadow:
+        0 7px 18px rgba(200, 0, 0, 0.22);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.exit-title {
+
+    margin: 0;
+
+    color: #20252d;
+
+    font-size: 30px;
+
+    line-height: 36px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+.exit-question {
+
+    margin: 10px 0 5px;
+
+    color: #303640;
+
+    font-size: 17px;
+
+    line-height: 25px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.exit-description {
+
+    margin: 0;
+
+    color: #7b838e;
+
+    font-size: 13px;
+
+    line-height: 21px;
+}
+
+
+/* =========================================================
+   USER CARD
+========================================================= */
+
+.exit-user-card {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    box-sizing: border-box;
+
+    text-align: left;
+
+    background: #f8f9fb;
+
+    border: 1px solid #e2e6eb;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   USER HEADER
+========================================================= */
+
+.exit-user-header {
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 15px 18px;
+
+    background: #f3f5f8;
+
+    border-bottom: 1px solid #e2e6eb;
+}
+
+
+.exit-user-avatar {
+
+    width: 42px;
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    border: 1px solid #dce1e7;
+
+    font-size: 19px;
+}
+
+
+.exit-user-heading {
+
+    margin-left: 12px;
+}
+
+
+.exit-user-title {
+
+    color: #303640;
+
+    font-size: 12px;
+
+    line-height: 17px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+}
+
+
+.exit-user-status {
+
+    margin-top: 2px;
+
+    color: #68717d;
+
+    font-size: 11px;
+
+    line-height: 16px;
+}
+
+
+.status-dot {
+
+    margin-right: 5px;
+
+    color: #1d9a55;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   USER DETAILS
+========================================================= */
+
+.exit-details {
+
+    padding: 5px 18px;
+}
+
+
+/* =========================================================
+   DETAIL ROW
+========================================================= */
+
+.exit-detail-row {
+
+    min-height: 47px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e7e9ed;
+}
+
+
+.exit-detail-row:last-child {
+
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.exit-detail-label {
+
+    display: flex;
+
+    align-items: center;
+
+    min-width: 130px;
+
+    color: #747d88;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.detail-icon {
+
+    width: 25px;
+
+    margin-right: 7px;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   VALUE
+========================================================= */
+
+.exit-detail-value {
+
+    max-width: 65%;
+
+    color: #252a32;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+.email-value {
+
+    color: #3c4652;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   SECURITY INFORMATION
+========================================================= */
+
+.exit-info {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 19px;
+
+    color: #858d97;
+
+    font-size: 11px;
+
+    line-height: 17px;
+}
+
+
+.exit-info-icon {
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.exit-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 23px;
+}
+
+
+.exit-actions button {
+
+    height: 46px;
+
+    min-width: 155px;
+
+    padding: 0 23px;
+
+    box-sizing: border-box;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.exit-cancel {
+
+    color: #3e4650;
+
+    background: #ffffff;
+
+    border: 1px solid #d2d7de;
+}
+
+
+.exit-cancel:hover {
+
+    background: #f5f6f8;
+
+    border-color: #c1c7cf;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SIGN OUT BUTTON
+========================================================= */
+
+.exit-signout {
+
+    color: #ffffff;
+
+    background: #c80000;
+
+    border: 1px solid #c80000;
+
+    box-shadow:
+        0 5px 14px rgba(200, 0, 0, 0.18);
+}
+
+
+.exit-signout:hover {
+
+    background: #aa0000;
+
+    border-color: #aa0000;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(200, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   BUTTON ARROWS
+========================================================= */
+
+.button-arrow {
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+.exit-cancel .button-arrow {
+
+    margin-right: 7px;
+}
+
+
+.exit-signout .button-arrow {
+
+    margin-left: 8px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.exit-footer {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 25px;
+
+    padding-top: 17px;
+
+    border-top: 1px solid #edf0f3;
+
+    color: #a0a7b0;
+
+    font-size: 10px;
+
+    line-height: 15px;
+}
+
+
+.footer-separator {
+
+    color: #c7cbd1;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .exit-page {
+
+        min-height: calc(100vh - 55px);
+
+        padding: 20px 15px;
+
+    }
+
+
+    .exit-card {
+
+        padding: 35px 25px 25px;
+
+    }
 
 }
 
-.page h1{
 
-    color:#c62828;
+@media (max-width: 520px) {
+
+    .exit-card {
+
+        padding: 30px 18px 22px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .exit-title {
+
+        font-size: 27px;
+
+    }
+
+
+    .exit-question {
+
+        font-size: 16px;
+
+    }
+
+
+    .exit-detail-row {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        gap: 4px;
+
+        padding: 9px 0;
+
+    }
+
+
+    .exit-detail-value {
+
+        max-width: 100%;
+
+        padding-left: 32px;
+
+        text-align: left;
+
+    }
+
+
+    .exit-actions {
+
+        flex-direction: column-reverse;
+
+        gap: 9px;
+
+    }
+
+
+    .exit-actions button {
+
+        width: 100%;
+
+    }
+
+
+    .exit-footer {
+
+        font-size: 9px;
+
+    }
 
 }

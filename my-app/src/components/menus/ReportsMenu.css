@@ -1,0 +1,264 @@
+/* =========================================================
+   REPORTS MENU
+========================================================= */
+
+.reports-nav-item {
+    position: relative;
+}
+
+
+/* =========================================================
+   MAIN DROPDOWN
+========================================================= */
+
+.reports-dropdown {
+    position: absolute;
+    top: 45px;
+    left: 0;
+
+    min-width: 240px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5d5d5;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    z-index: 999;
+}
+
+
+/* =========================================================
+   SUBMENU ITEM
+========================================================= */
+
+.reports-submenu-item {
+    position: relative;
+}
+
+
+/* =========================================================
+   SUBMENU
+========================================================= */
+
+.reports-submenu {
+    position: absolute;
+
+    top: 0;
+    left: 100%;
+
+    min-width: 270px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5d5d5;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    z-index: 1000;
+}
+
+
+/* =========================================================
+   DROPDOWN ITEM
+========================================================= */
+
+.reports-dropdown .dropdown-item {
+    padding: 10px 15px;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    font-size: 14px;
+
+    color: #333333;
+
+    transition: background 0.2s ease,
+                color 0.2s ease;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.reports-dropdown .dropdown-item:hover {
+    background: #f1f5fb;
+
+    color: #1f3c88;
+}
+
+
+/* =========================================================
+   MOBILE VIEW
+========================================================= */
+
+@media (max-width: 768px) {
+
+    /*
+       Main Reports dropdown becomes part of
+       the mobile vertical menu.
+    */
+
+    .reports-dropdown {
+        position: absolute;
+
+        top: 45px;
+        left: 0;
+
+        width: 230px;
+        min-width: 230px;
+
+        max-height: calc(100vh - 55px);
+
+        overflow-y: auto;
+        overflow-x: visible;
+
+        background: #ffffff;
+
+        border: 1px solid #d5d5d5;
+
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+
+        z-index: 9999;
+    }
+
+
+    /* -----------------------------------------
+       Main Dropdown Items
+       ----------------------------------------- */
+
+    .reports-dropdown .dropdown-item {
+        min-height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        padding: 10px 14px;
+
+        font-size: 14px;
+
+        white-space: normal;
+
+        line-height: 1.3;
+    }
+
+
+    /* -----------------------------------------
+       Submenu Parent
+       ----------------------------------------- */
+
+    .reports-submenu-item {
+        position: relative;
+    }
+
+
+    /* -----------------------------------------
+       Mobile Submenu
+       ----------------------------------------- */
+
+    .reports-submenu {
+        position: relative;
+
+        top: auto;
+        left: auto;
+
+        width: calc(100% - 20px);
+
+        min-width: 0;
+
+        margin: 0 10px 8px 10px;
+
+        background: #f8fafc;
+
+        border: 1px solid #d8dee8;
+
+        box-shadow: none;
+
+        z-index: 10000;
+    }
+
+
+    /* -----------------------------------------
+       Submenu Items
+       ----------------------------------------- */
+
+    .reports-submenu .dropdown-item {
+        min-height: 40px;
+
+        padding: 9px 12px;
+
+        font-size: 13px;
+
+        background: #f8fafc;
+
+        border-bottom: 1px solid #e5e9ef;
+    }
+
+
+    .reports-submenu .dropdown-item:last-child {
+        border-bottom: none;
+    }
+
+
+    /* -----------------------------------------
+       Touch / Click Feedback
+       ----------------------------------------- */
+
+    .reports-dropdown .dropdown-item:active {
+        background: #e5edf9;
+    }
+
+
+    /* -----------------------------------------
+       Scrollbar
+       ----------------------------------------- */
+
+    .reports-dropdown::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    .reports-dropdown::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .reports-dropdown::-webkit-scrollbar-thumb {
+        background: #b8c1cc;
+
+        border-radius: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .reports-dropdown {
+        width: 220px;
+        min-width: 220px;
+    }
+
+    .reports-dropdown .dropdown-item {
+        font-size: 13px;
+        padding: 9px 12px;
+    }
+
+    .reports-submenu {
+        width: calc(100% - 16px);
+
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    .reports-submenu .dropdown-item {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+}

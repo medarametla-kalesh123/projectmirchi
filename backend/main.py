@@ -5,6 +5,7 @@ from database import engine
 
 
 # ================= Models =================
+from models.user import User
 
 from models.account import Account
 
@@ -29,6 +30,8 @@ from routers.traderspatti import router as traderspatti_router
 from routers.farmers_patti import router as farmers_patti_router
 
 from routers.dailyreport import router as dailyreport_router
+from routers.auth import router as auth_router
+
 
 from routers import farmers_due_report
 
@@ -45,6 +48,8 @@ from routers.traders_due_report import (
 
 
 # ================= Create Tables =================
+
+User.metadata.create_all(bind=engine)
 
 Account.metadata.create_all(
     bind=engine
@@ -113,7 +118,7 @@ def home():
         "Mirchi Trading Backend Running Successfully"
 
     }
-
+app.include_router(auth_router)
 
 # ================= Account APIs =================
 
