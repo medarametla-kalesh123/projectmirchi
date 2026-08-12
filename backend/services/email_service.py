@@ -1,8 +1,7 @@
 import os
-import smtplib
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import requests
+
 from urllib.parse import quote
 
 from dotenv import load_dotenv
@@ -16,16 +15,29 @@ load_dotenv()
 
 
 # =========================================================
-# GMAIL SETTINGS
+# BREVO SETTINGS
 # =========================================================
 
-GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
-GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
+
+BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL")
+
+BREVO_SENDER_NAME = os.getenv(
+    "BREVO_SENDER_NAME",
+    "Mirchi Trading"
+)
 
 FRONTEND_URL = os.getenv(
     "FRONTEND_URL",
     "http://localhost:3000"
 )
+
+
+# =========================================================
+# BREVO API URL
+# =========================================================
+
+BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
 
 
 # =========================================================
@@ -39,20 +51,25 @@ def send_password_reset_email(
 ):
 
     # =====================================================
-    # CHECK CONFIGURATION
+    # CHECK BREVO CONFIGURATION
     # =====================================================
 
-    if not GMAIL_USERNAME:
+    if not BREVO_API_KEY:
+
         raise ValueError(
-            "GMAIL_USERNAME is not configured"
+            "BREVO_API_KEY is not configured"
         )
 
-    if not GMAIL_APP_PASSWORD:
+
+    if not BREVO_SENDER_EMAIL:
+
         raise ValueError(
-            "GMAIL_APP_PASSWORD is not configured"
+            "BREVO_SENDER_EMAIL is not configured"
         )
+
 
     if not FRONTEND_URL:
+
         raise ValueError(
             "FRONTEND_URL is not configured"
         )
@@ -66,6 +83,7 @@ def send_password_reset_email(
         reset_token,
         safe=""
     )
+
 
     reset_link = (
         f"{FRONTEND_URL}/reset-password"
@@ -266,8 +284,10 @@ Mirchi Trading
             font-size: 14px;
             color: #666666;
         ">
+
             This password reset link will expire
             in <strong>15 minutes</strong>.
+
         </p>
 
 
@@ -275,8 +295,10 @@ Mirchi Trading
             font-size: 14px;
             color: #666666;
         ">
+
             If you did not request a password reset,
             you can safely ignore this email.
+
         </p>
 
 
@@ -309,101 +331,172 @@ Mirchi Trading
 
 
     # =====================================================
-    # CREATE EMAIL MESSAGE
+    # BREVO REQUEST HEADERS
     # =====================================================
 
-    message = MIMEMultipart("alternative")
+    headers = {
 
-    message["Subject"] = subject
-    message["From"] = GMAIL_USERNAME
-    message["To"] = email
+        "accept": "application/json",
 
+        "api-key": BREVO_API_KEY,
 
-    # =====================================================
-    # ATTACH PLAIN TEXT
-    # =====================================================
+        "content-type": "application/json"
 
-    message.attach(
-        MIMEText(
-            text_body,
-            "plain",
-            "utf-8"
-        )
-    )
+    }
 
 
     # =====================================================
-    # ATTACH HTML
+    # EMAIL DATA
     # =====================================================
 
-    message.attach(
-        MIMEText(
-            html_body,
-            "html",
-            "utf-8"
-        )
-    )
+    payload = {
+
+        "sender": {
+
+            "name": BREVO_SENDER_NAME,
+
+            "email": BREVO_SENDER_EMAIL
+
+        },
+
+        "to": [
+
+            {
+
+                "email": email,
+
+                "name": username
+
+            }
+
+        ],
+
+        "subject": subject,
+
+        "htmlContent": html_body,
+
+        "textContent": text_body
+
+    }
 
 
     # =====================================================
-    # SEND EMAIL USING GMAIL SMTP
+    # SEND EMAIL THROUGH BREVO API
     # =====================================================
 
     try:
 
-        with smtplib.SMTP(
-            "smtp.gmail.com",
-            587,
+        response = requests.post(
+
+            BREVO_API_URL,
+
+            headers=headers,
+
+            json=payload,
+
             timeout=30
-        ) as server:
 
-            # Start encrypted connection
-            server.starttls()
-
-            # Login using Gmail App Password
-            server.login(
-                GMAIL_USERNAME,
-                GMAIL_APP_PASSWORD
-            )
-
-            # Send email
-            server.sendmail(
-                GMAIL_USERNAME,
-                email,
-                message.as_string()
-            )
+        )
 
 
-    # =====================================================
-    # GMAIL AUTHENTICATION ERROR
-    # =====================================================
-
-    except smtplib.SMTPAuthenticationError as e:
+    except requests.exceptions.Timeout as e:
 
         raise ValueError(
-            "Gmail authentication failed. "
-            "Check GMAIL_USERNAME and GMAIL_APP_PASSWORD. "
-            "Make sure you are using a Gmail App Password."
+            "Brevo email request timed out."
+        ) from e
+
+
+    except requests.exceptions.RequestException as e:
+
+        raise ValueError(
+            f"Could not connect to Brevo API: {str(e)}"
         ) from e
 
 
     # =====================================================
-    # OTHER SMTP ERROR
+    # HANDLE BREVO RESPONSE
     # =====================================================
 
-    except smtplib.SMTPException as e:
+    if response.status_code in (200, 201):
+
+        try:
+
+            response_data = response.json()
+
+        except ValueError:
+
+            response_data = {}
+
+
+        return {
+
+            "success": True,
+
+            "message": "Password reset email sent successfully",
+
+            "message_id": response_data.get("messageId")
+
+        }
+
+
+    # =====================================================
+    # BREVO AUTHENTICATION ERROR
+    # =====================================================
+
+    if response.status_code == 401:
 
         raise ValueError(
-            f"Failed to send password reset email: {str(e)}"
-        ) from e
+            "Brevo authentication failed. "
+            "Check BREVO_API_KEY."
+        )
 
 
     # =====================================================
-    # GENERAL ERROR
+    # BREVO FORBIDDEN ERROR
     # =====================================================
 
-    except Exception as e:
+    if response.status_code == 403:
 
         raise ValueError(
-            f"Email sending failed: {str(e)}"
-        ) from e
+            "Brevo rejected the request. "
+            "Check your sender email verification "
+            "and Brevo account permissions."
+        )
+
+
+    # =====================================================
+    # BREVO RATE LIMIT
+    # =====================================================
+
+    if response.status_code == 429:
+
+        raise ValueError(
+            "Brevo rate limit exceeded. "
+            "Please try again later."
+        )
+
+
+    # =====================================================
+    # OTHER BREVO ERROR
+    # =====================================================
+
+    try:
+
+        error_data = response.json()
+
+        error_message = (
+            error_data.get("message")
+            or error_data.get("code")
+            or response.text
+        )
+
+    except ValueError:
+
+        error_message = response.text
+
+
+    raise ValueError(
+        f"Brevo email sending failed "
+        f"(HTTP {response.status_code}): "
+        f"{error_message}"
+    )
