@@ -1,6 +1,18 @@
 /* =========================================================
    SCREEN
-   ========================================================= */
+========================================================= */
+
+.print-only-wrapper {
+    position: absolute;
+    left: -10000px;
+    top: 0;
+    width: 900px;
+}
+
+
+/* =========================================================
+   PRINT CONTAINER - SCREEN
+========================================================= */
 
 .print-container {
     width: 900px;
@@ -11,6 +23,11 @@
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
+
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .title {
     text-align: center;
@@ -25,7 +42,7 @@
 
 /* =========================================================
    HEADER
-   ========================================================= */
+========================================================= */
 
 .header {
     display: flex;
@@ -46,7 +63,7 @@
 
 /* =========================================================
    ITEMS TABLE
-   ========================================================= */
+========================================================= */
 
 .items-table {
     width: 100%;
@@ -71,7 +88,7 @@
 
 /* =========================================================
    SUMMARY
-   ========================================================= */
+========================================================= */
 
 .summary-table {
     width: 100%;
@@ -93,7 +110,7 @@
 
 /* =========================================================
    CHARGES
-   ========================================================= */
+========================================================= */
 
 .charges-title {
     text-align: center;
@@ -124,7 +141,7 @@
 
 /* =========================================================
    PAYABLE
-   ========================================================= */
+========================================================= */
 
 .amount-payable {
     margin-top: 22px;
@@ -139,7 +156,7 @@
 
 /* =========================================================
    SIGNATURES
-   ========================================================= */
+========================================================= */
 
 .signatures {
     display: flex;
@@ -155,8 +172,8 @@
 
 
 /* =========================================================
-   BUTTON
-   ========================================================= */
+   BACK BUTTON
+========================================================= */
 
 .back-btn {
     display: block;
@@ -167,15 +184,17 @@
 
 
 /* =========================================================
-   MOBILE SCREEN ONLY
-   IMPORTANT:
-   This does NOT affect desktop.
-   This does NOT affect printing.
-   ========================================================= */
+   MOBILE SCREEN
+========================================================= */
 
 @media screen and (max-width: 600px) {
 
-    /* ================= CONTAINER ================= */
+    .print-only-wrapper {
+        position: absolute;
+        left: -10000px;
+        top: 0;
+        width: 100%;
+    }
 
     .print-container {
         width: 100%;
@@ -219,13 +238,6 @@
 
 
     /* ================= ITEMS TABLE ================= */
-
-    /*
-       The table still contains all 7 columns.
-
-       On mobile it becomes horizontally scrollable
-       instead of breaking the bill layout.
-    */
 
     .items-table {
         display: block;
@@ -320,8 +332,8 @@
 
 
 /* =========================================================
-   VERY SMALL MOBILE SCREEN
-   ========================================================= */
+   VERY SMALL MOBILE
+========================================================= */
 
 @media screen and (max-width: 380px) {
 
@@ -329,22 +341,13 @@
         padding: 8px;
     }
 
-
-    /* ================= TITLE ================= */
-
     .title {
         font-size: 20px;
     }
 
-
-    /* ================= HEADER ================= */
-
     .header p {
         font-size: 12px;
     }
-
-
-    /* ================= ITEMS ================= */
 
     .items-table th,
     .items-table td {
@@ -352,39 +355,24 @@
         padding: 4px;
     }
 
-
-    /* ================= SUMMARY ================= */
-
     .summary-table td {
         font-size: 11px;
         padding: 5px;
     }
-
-
-    /* ================= CHARGES ================= */
 
     .charges-table td {
         font-size: 11px;
         padding: 5px;
     }
 
-
-    /* ================= PAYABLE ================= */
-
     .amount-payable {
         font-size: 15px;
         padding: 8px;
     }
 
-
-    /* ================= SIGNATURES ================= */
-
     .signatures div {
         font-size: 10px;
     }
-
-
-    /* ================= BUTTON ================= */
 
     .back-btn {
         font-size: 15px;
@@ -394,117 +382,318 @@
 
 
 /* =========================================================
-   PRINT
-   DO NOT CHANGE
-   ========================================================= */
-
-/* =========================================================
-   PRINT
-   ========================================================= */
+   A4 PRINT
+========================================================= */
 
 @page {
     size: A4 portrait;
     margin: 10mm;
 }
 
+
+/* =========================================================
+   PRINT
+========================================================= */
+
 @media print {
 
     html,
     body {
-        width: 210mm;
-        height: 297mm;
-        margin: 0;
-        padding: 0;
-        background: white;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        width: 210mm !important;
+        min-width: 210mm !important;
+
+        height: auto !important;
+        min-height: 297mm !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: white !important;
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
-    /* Do NOT use body * { visibility: hidden; } */
+
+    /* =====================================================
+       VERY IMPORTANT
+       RESET OFF-SCREEN MOBILE/DESKTOP WRAPPER
+    ===================================================== */
+
+    .print-only-wrapper {
+
+        position: static !important;
+
+        left: auto !important;
+        top: auto !important;
+
+        width: auto !important;
+        height: auto !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+
+        display: block !important;
+
+        visibility: visible !important;
+    }
+
+
+    /* =====================================================
+       PRINT CONTAINER
+    ===================================================== */
 
     .print-container {
 
-        position: absolute;
-        left: 0;
-        top: 0;
+        position: relative !important;
 
-        width: 190mm;
+        left: auto !important;
+        top: auto !important;
+
+        width: 190mm !important;
+        min-width: 190mm !important;
+
         min-height: 277mm;
 
-        margin: 0;
-        padding: 6mm;
+        margin: 0 !important;
+        padding: 6mm !important;
 
-        background: white;
-        color: #000;
+        background: white !important;
+        color: #000 !important;
 
-        box-sizing: border-box;
+        box-sizing: border-box !important;
 
-        display: block;
-        visibility: visible;
+        display: block !important;
+
+        visibility: visible !important;
+
+        overflow: visible !important;
     }
+
 
     .print-container * {
-        visibility: visible;
+        visibility: visible !important;
     }
+
+
+    /* =====================================================
+       TITLE
+    ===================================================== */
 
     .title {
-        font-size: 22px;
-        margin-bottom: 14px;
-        padding-bottom: 6px;
+        font-size: 22px !important;
+        margin-bottom: 14px !important;
+        padding-bottom: 6px !important;
     }
 
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
     .header {
-        margin-bottom: 12px;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+
+        margin-bottom: 12px !important;
+    }
+
+    .header-left,
+    .header-right {
+        width: 48% !important;
     }
 
     .header p {
-        font-size: 11px;
-        margin: 3px 0;
+        font-size: 11px !important;
+        margin: 3px 0 !important;
     }
 
+
+    /* =====================================================
+       ITEMS TABLE
+    ===================================================== */
+
     .items-table {
-        margin-bottom: 10px;
+
+        display: table !important;
+
+        width: 100% !important;
+
+        max-width: none !important;
+
+        overflow: visible !important;
+
+        white-space: normal !important;
+
+        border-collapse: collapse !important;
+
+        margin-bottom: 10px !important;
+    }
+
+    .items-table thead {
+        display: table-header-group !important;
+    }
+
+    .items-table tbody {
+        display: table-row-group !important;
+    }
+
+    .items-table tr {
+        display: table-row !important;
     }
 
     .items-table th,
     .items-table td {
-        font-size: 10px;
-        padding: 4px;
+
+        display: table-cell !important;
+
+        font-size: 10px !important;
+
+        padding: 4px !important;
+
+        border: 1px solid #000 !important;
     }
 
+
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
+
     .summary-table {
-        margin-bottom: 12px;
+
+        display: table !important;
+
+        width: 100% !important;
+
+        margin-bottom: 12px !important;
+
+        border-collapse: collapse !important;
+    }
+
+    .summary-table tbody {
+        display: table-row-group !important;
+    }
+
+    .summary-table tr {
+        display: table-row !important;
     }
 
     .summary-table td {
-        font-size: 10px;
-        padding: 5px 8px;
+
+        display: table-cell !important;
+
+        font-size: 10px !important;
+
+        padding: 5px 8px !important;
+
+        border: 1px solid #000 !important;
     }
 
+
+    /* =====================================================
+       CHARGES
+    ===================================================== */
+
     .charges-title {
-        font-size: 15px;
-        margin-bottom: 5px;
+
+        font-size: 15px !important;
+
+        margin-bottom: 5px !important;
+    }
+
+    .charges-table {
+
+        display: table !important;
+
+        width: 100% !important;
+
+        border-collapse: collapse !important;
+    }
+
+    .charges-table tbody {
+        display: table-row-group !important;
+    }
+
+    .charges-table tr {
+        display: table-row !important;
     }
 
     .charges-table td {
-        font-size: 10px;
-        padding: 4px 8px;
+
+        display: table-cell !important;
+
+        font-size: 10px !important;
+
+        padding: 4px 8px !important;
+
+        border: 1px solid #000 !important;
     }
+
+
+    /* =====================================================
+       TOTAL CHARGES
+    ===================================================== */
+
+    .charges-total {
+        background: #ececec !important;
+    }
+
+
+    /* =====================================================
+       AMOUNT PAYABLE
+    ===================================================== */
 
     .amount-payable {
-        margin-top: 12px;
-        padding: 8px 10px;
-        font-size: 18px;
+
+        width: 100% !important;
+
+        margin-top: 12px !important;
+
+        padding: 8px 10px !important;
+
+        font-size: 18px !important;
+
+        border: 3px solid #000 !important;
+
+        box-sizing: border-box !important;
+
+        display: flex !important;
+
+        justify-content: space-between !important;
     }
 
+
+    /* =====================================================
+       SIGNATURES
+    ===================================================== */
+
     .signatures {
-        margin-top: 35px;
-        font-size: 11px;
+
+        display: flex !important;
+
+        justify-content: space-between !important;
+
+        margin-top: 35px !important;
+
+        font-size: 11px !important;
     }
+
+    .signatures div {
+        width: 240px !important;
+    }
+
+
+    /* =====================================================
+       HIDE BUTTONS
+    ===================================================== */
 
     .back-btn,
     nav,
-    header {
+    header,
+    button {
         display: none !important;
     }
 }

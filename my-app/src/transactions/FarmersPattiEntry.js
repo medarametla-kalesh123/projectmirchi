@@ -3083,19 +3083,13 @@ useEffect(() => {
 
   {/* Hidden Printable Component */}
 
-  <div
-    style={{
-      position: "absolute",
-      left: "-10000px",
-      top: 0,
-    }}
-  >
-    <FarmersPattiPrint
-      ref={printRef}
-      printData={printData}
-      setPage={setPage}
-    />
-  </div>
+ <div className="print-only-wrapper">
+  <FarmersPattiPrint
+    ref={printRef}
+    printData={printData}
+    setPage={setPage}
+  />
+</div>
 
 </div>
     </div>
