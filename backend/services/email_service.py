@@ -22,8 +22,8 @@ GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
 GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
 
 FRONTEND_URL = os.getenv(
-    "FRONTEND_URL",
-    "http://localhost:3000"
+    "FRONTEND_URL"
+  
 )
 
 
