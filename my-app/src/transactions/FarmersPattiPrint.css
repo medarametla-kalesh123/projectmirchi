@@ -398,6 +398,10 @@
    DO NOT CHANGE
    ========================================================= */
 
+/* =========================================================
+   PRINT
+   ========================================================= */
+
 @page {
     size: A4 portrait;
     margin: 10mm;
@@ -416,14 +420,7 @@
         print-color-adjust: exact;
     }
 
-    body * {
-        visibility: hidden;
-    }
-
-    .print-container,
-    .print-container * {
-        visibility: visible;
-    }
+    /* Do NOT use body * { visibility: hidden; } */
 
     .print-container {
 
@@ -438,7 +435,16 @@
         padding: 6mm;
 
         background: white;
+        color: #000;
+
         box-sizing: border-box;
+
+        display: block;
+        visibility: visible;
+    }
+
+    .print-container * {
+        visibility: visible;
     }
 
     .title {
