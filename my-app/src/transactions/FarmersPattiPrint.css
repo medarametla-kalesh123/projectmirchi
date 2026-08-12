@@ -1,12 +1,21 @@
 /* =========================================================
-   SCREEN
+   PRINT-ONLY WRAPPER
+   IMPORTANT:
+   Do NOT move the printable element to -10000px.
+   Mobile browsers can produce a blank print preview
+   when the print target is positioned far outside
+   the viewport.
 ========================================================= */
 
 .print-only-wrapper {
-    position: absolute;
-    left: -10000px;
+    position: fixed;
+    left: 0;
     top: 0;
-    width: 900px;
+    width: 100%;
+    height: auto;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: -1;
 }
 
 
@@ -189,11 +198,25 @@
 
 @media screen and (max-width: 600px) {
 
+    /*
+     * Keep the print target in the document's normal
+     * coordinate space instead of moving it thousands
+     * of pixels outside the viewport.
+     *
+     * visibility:hidden keeps it invisible to the user,
+     * while the print media rule below makes it visible
+     * during printing.
+     */
     .print-only-wrapper {
-        position: absolute;
-        left: -10000px;
+        position: fixed;
+        left: 0;
         top: 0;
         width: 100%;
+        height: auto;
+        visibility: hidden;
+        pointer-events: none;
+        overflow: visible;
+        z-index: -1;
     }
 
     .print-container {
@@ -416,8 +439,7 @@
 
 
     /* =====================================================
-       VERY IMPORTANT
-       RESET OFF-SCREEN MOBILE/DESKTOP WRAPPER
+       PRINT WRAPPER
     ===================================================== */
 
     .print-only-wrapper {
@@ -438,6 +460,8 @@
         display: block !important;
 
         visibility: visible !important;
+
+        z-index: auto !important;
     }
 
 

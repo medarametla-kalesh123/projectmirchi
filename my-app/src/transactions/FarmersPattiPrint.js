@@ -42,9 +42,8 @@ const labels = {
     amountPayable: "Amount Payable",
 
     farmerSignature: "Farmer Signature",
-    authorizedSignature: "Authorized Signature",
+    authorizedSignature: "Authorized Signature"
 
-    
   },
 
   telugu: {
@@ -86,9 +85,8 @@ const labels = {
     amountPayable: "చెల్లించవలసిన మొత్తం",
 
     farmerSignature: "రైతు సంతకం",
-    authorizedSignature: "అధికార సంతకం",
+    authorizedSignature: "అధికార సంతకం"
 
-    
   },
 
   hindi: {
@@ -130,9 +128,8 @@ const labels = {
     amountPayable: "देय राशि",
 
     farmerSignature: "किसान हस्ताक्षर",
-    authorizedSignature: "अधिकृत हस्ताक्षर",
+    authorizedSignature: "अधिकृत हस्ताक्षर"
 
-    
   },
 
   tamil: {
@@ -174,18 +171,23 @@ const labels = {
     amountPayable: "செலுத்த வேண்டிய தொகை",
 
     farmerSignature: "விவசாயி கையொப்பம்",
-    authorizedSignature: "அங்கீகரிக்கப்பட்ட கையொப்பம்",
+    authorizedSignature: "அங்கீகரிக்கப்பட்ட கையொப்பம்"
 
-  
   }
 
 };
+
 
 const FarmersPattiPrint = forwardRef(
   ({ printData, setPage }, ref) => {
 
     if (!printData) return null;
-    const t = labels[printData.language] || labels.english;
+
+    const t =
+      labels[
+        printData.language
+      ] || labels.english;
+
 
     return (
 
@@ -194,54 +196,52 @@ const FarmersPattiPrint = forwardRef(
         className="print-container"
       >
 
-        {/* ================= TITLE ================= */}
-<h1 className="title">
-  {t.title}
-</h1>
+        <h1 className="title">
+          {t.title}
+        </h1>
 
-        {/* ================= HEADER ================= */}
 
         <div className="header">
 
           <div className="header-left">
 
             <p>
-
-             <strong>{t.farmer} :</strong>{" "}
+              <strong>
+                {t.farmer} :
+              </strong>{" "}
               {printData.farmer_name}
-
             </p>
 
             <p>
-
-              <strong>{t.address} :</strong>{" "}
+              <strong>
+                {t.address} :
+              </strong>{" "}
               {printData.address}
-
             </p>
 
           </div>
 
+
           <div className="header-right">
 
             <p>
-
-              <strong>{t.billNo} :</strong>{" "}
+              <strong>
+                {t.billNo} :
+              </strong>{" "}
               {printData.bill_no}
-
             </p>
 
             <p>
-
-              <strong>{t.date} :</strong>{" "}
+              <strong>
+                {t.date} :
+              </strong>{" "}
               {printData.date}
-
             </p>
 
           </div>
 
         </div>
 
-        {/* ================= ITEMS ================= */}
 
         <table className="items-table">
 
@@ -249,50 +249,71 @@ const FarmersPattiPrint = forwardRef(
 
             <tr>
 
-             <th>{t.sno}</th>
-<th>{t.item}</th>
-<th>{t.boras}</th>
-<th>{t.bags}</th>
-<th>{t.netWeight}</th>
-<th>{t.rate}</th>
-<th>{t.netValue}</th>
+              <th>{t.sno}</th>
+              <th>{t.item}</th>
+              <th>{t.boras}</th>
+              <th>{t.bags}</th>
+              <th>{t.netWeight}</th>
+              <th>{t.rate}</th>
+              <th>{t.netValue}</th>
+
             </tr>
 
           </thead>
 
+
           <tbody>
 
-            {printData.items.map((item, index) => (
+            {printData.items.map(
+              (
+                item,
+                index
+              ) => (
 
-              <tr key={index}>
+                <tr
+                  key={index}
+                >
 
-                <td>{index + 1}</td>
+                  <td>
+                    {index + 1}
+                  </td>
 
-                <td>{item.item_name}</td>
+                  <td>
+                    {item.item_name}
+                  </td>
 
-                <td>{item.boras}</td>
+                  <td>
+                    {item.boras}
+                  </td>
 
-                <td>{item.bags}</td>
+                  <td>
+                    {item.bags}
+                  </td>
 
-                <td>{item.net_weight}</td>
+                  <td>
+                    {item.net_weight}
+                  </td>
 
-                <td>{item.rate}</td>
+                  <td>
+                    {item.rate}
+                  </td>
 
-                <td>
+                  <td>
+                    ₹{" "}
+                    {Number(
+                      item.net_value
+                    ).toFixed(2)}
+                  </td>
 
-                  ₹ {Number(item.net_value).toFixed(2)}
+                </tr>
 
-                </td>
-
-              </tr>
-
-            ))}
+              )
+            )}
 
           </tbody>
 
         </table>
 
-        {/* ================= ITEM SUMMARY ================= */}
 
         <table className="summary-table">
 
@@ -301,48 +322,60 @@ const FarmersPattiPrint = forwardRef(
             <tr>
 
               <td>
-
-                <strong>{t.grossAmount}</strong>
+                <strong>
+                  {t.grossAmount}
+                </strong>
               </td>
 
               <td>
-
-                ₹ {Number(printData.gross_amount).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.gross_amount
+                ).toFixed(2)}
               </td>
 
             </tr>
 
+
             <tr>
 
               <td>
-
-                <strong>{t.costOfBags}</strong>
-
+                <strong>
+                  {t.costOfBags}
+                </strong>
               </td>
 
               <td>
-
-                ₹ {Number(printData.cost_of_bags).toFixed(2)}
+                ₹{" "}
+                {Number(
+                  printData.cost_of_bags
+                ).toFixed(2)}
                 {" "}
-               ({Number(printData.cost_per_bag).toFixed(2)}/{t.bags})
-
+                (
+                {Number(
+                  printData.cost_per_bag
+                ).toFixed(2)}
+                /
+                {t.bags}
+                )
               </td>
 
             </tr>
 
+
             <tr>
 
               <td>
-
-               <strong>{t.totalNetValue}</strong>
-
+                <strong>
+                  {t.totalNetValue}
+                </strong>
               </td>
 
               <td>
-
-                ₹ {Number(printData.total_net_value).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.total_net_value
+                ).toFixed(2)}
               </td>
 
             </tr>
@@ -351,13 +384,11 @@ const FarmersPattiPrint = forwardRef(
 
         </table>
 
-        {/* ================= CHARGES ================= */}
 
         <h2 className="charges-title">
-
           {t.charges}
-
         </h2>
+
 
         <table className="charges-table">
 
@@ -365,159 +396,211 @@ const FarmersPattiPrint = forwardRef(
 
             <tr>
 
-             <td>{t.commission}</td>
+              <td>
+                {t.commission}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.commission).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.commission
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-             <td>{t.expense}</td>
+              <td>
+                {t.expense}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.expense).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.expense
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-             <td>{t.yardCharges}</td>
+              <td>
+                {t.yardCharges}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.yard_charges).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.yard_charges
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.machu}</td>
+              <td>
+                {t.machu}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.machu).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.machu
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.nettuCooli}</td>
               <td>
+                {t.nettuCooli}
+              </td>
 
-                ₹ {Number(printData.nettu_cooli).toFixed(2)}
-
+              <td>
+                ₹{" "}
+                {Number(
+                  printData.nettu_cooli
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.freight}</td>
               <td>
+                {t.freight}
+              </td>
 
-                ₹ {Number(printData.freight).toFixed(2)}
-
+              <td>
+                ₹{" "}
+                {Number(
+                  printData.freight
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.kataCooli}</td>
               <td>
+                {t.kataCooli}
+              </td>
 
-                ₹ {Number(printData.kata_cooli).toFixed(2)}
-
+              <td>
+                ₹{" "}
+                {Number(
+                  printData.kata_cooli
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.tolakam}</td>
+              <td>
+                {t.tolakam}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.tolakam).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.tolakam
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-             <td>{t.rasiCooli}</td>
+              <td>
+                {t.rasiCooli}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.rasi_cooli).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.rasi_cooli
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.cashAdvance}</td>
+              <td>
+                {t.cashAdvance}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.cash_advance).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.cash_advance
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-              <td>{t.loanAmount}</td>
               <td>
+                {t.loanAmount}
+              </td>
 
-                ₹ {Number(printData.loan_amount).toFixed(2)}
-
+              <td>
+                ₹{" "}
+                {Number(
+                  printData.loan_amount
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr>
 
-             <td>{t.interest}</td>
+              <td>
+                {t.interest}
+              </td>
 
               <td>
-
-                ₹ {Number(printData.interest).toFixed(2)}
-
+                ₹{" "}
+                {Number(
+                  printData.interest
+                ).toFixed(2)}
               </td>
 
             </tr>
+
 
             <tr className="charges-total">
 
               <td>
-
-                <strong>{t.totalCharges}</strong>
+                <strong>
+                  {t.totalCharges}
+                </strong>
               </td>
 
               <td>
-
                 <strong>
-
-                  ₹ {Number(printData.total_charges).toFixed(2)}
-
+                  ₹{" "}
+                  {Number(
+                    printData.total_charges
+                  ).toFixed(2)}
                 </strong>
-
               </td>
 
             </tr>
@@ -526,25 +609,22 @@ const FarmersPattiPrint = forwardRef(
 
         </table>
 
-        {/* ================= PAYABLE ================= */}
 
         <div className="amount-payable">
 
           <span>
-
-           {t.amountPayable}
-
+            {t.amountPayable}
           </span>
 
           <span>
-
-            ₹ {Number(printData.rounding_off).toFixed(2)}
-
+            ₹{" "}
+            {Number(
+              printData.rounding_off
+            ).toFixed(2)}
           </span>
 
         </div>
 
-        {/* ================= SIGNATURES ================= */}
 
         <div className="signatures">
 
@@ -554,9 +634,10 @@ const FarmersPattiPrint = forwardRef(
 
             <br />
 
-           {t.farmerSignature}
+            {t.farmerSignature}
 
           </div>
+
 
           <div>
 
@@ -564,20 +645,22 @@ const FarmersPattiPrint = forwardRef(
 
             <br />
 
-           {t.authorizedSignature}
+            {t.authorizedSignature}
+
           </div>
 
         </div>
 
-        {/* ================= BACK ================= */}
 
         <button
           className="back-btn"
-          onClick={() => setPage("farmerspattientry")}
+          onClick={() =>
+            setPage(
+              "farmerspattientry"
+            )
+          }
         >
-
           Back
-
         </button>
 
       </div>
@@ -585,7 +668,6 @@ const FarmersPattiPrint = forwardRef(
     );
 
   }
-
 );
 
 export default FarmersPattiPrint;
