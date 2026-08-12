@@ -1,4 +1,6 @@
-/* ================= SCREEN ================= */
+/* =========================================================
+   SCREEN
+   ========================================================= */
 
 .print-container {
     width: 900px;
@@ -20,7 +22,10 @@
     padding-bottom: 10px;
 }
 
-/* ================= HEADER ================= */
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .header {
     display: flex;
@@ -38,7 +43,10 @@
     font-size: 16px;
 }
 
-/* ================= ITEMS TABLE ================= */
+
+/* =========================================================
+   ITEMS TABLE
+   ========================================================= */
 
 .items-table {
     width: 100%;
@@ -60,7 +68,10 @@
     font-size: 14px;
 }
 
-/* ================= SUMMARY ================= */
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
 
 .summary-table {
     width: 100%;
@@ -79,7 +90,10 @@
     font-weight: bold;
 }
 
-/* ================= CHARGES ================= */
+
+/* =========================================================
+   CHARGES
+   ========================================================= */
 
 .charges-title {
     text-align: center;
@@ -107,7 +121,10 @@
     font-weight: bold;
 }
 
-/* ================= PAYABLE ================= */
+
+/* =========================================================
+   PAYABLE
+   ========================================================= */
 
 .amount-payable {
     margin-top: 22px;
@@ -119,7 +136,10 @@
     font-weight: bold;
 }
 
-/* ================= SIGNATURES ================= */
+
+/* =========================================================
+   SIGNATURES
+   ========================================================= */
 
 .signatures {
     display: flex;
@@ -133,7 +153,10 @@
     width: 240px;
 }
 
-/* ================= BUTTON ================= */
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
 
 .back-btn {
     display: block;
@@ -142,7 +165,238 @@
     cursor: pointer;
 }
 
-/* ================= PRINT ================= */
+
+/* =========================================================
+   MOBILE SCREEN ONLY
+   IMPORTANT:
+   This does NOT affect desktop.
+   This does NOT affect printing.
+   ========================================================= */
+
+@media screen and (max-width: 600px) {
+
+    /* ================= CONTAINER ================= */
+
+    .print-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 12px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+
+    /* ================= TITLE ================= */
+
+    .title {
+        font-size: 22px;
+        margin-bottom: 15px;
+        padding-bottom: 7px;
+        letter-spacing: 0.5px;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .header-left,
+    .header-right {
+        width: 100%;
+    }
+
+    .header p {
+        margin: 5px 0;
+        font-size: 13px;
+        word-break: break-word;
+    }
+
+
+    /* ================= ITEMS TABLE ================= */
+
+    /*
+       The table still contains all 7 columns.
+
+       On mobile it becomes horizontally scrollable
+       instead of breaking the bill layout.
+    */
+
+    .items-table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 18px;
+    }
+
+    .items-table th {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+    .items-table td {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+
+    /* ================= SUMMARY ================= */
+
+    .summary-table {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .summary-table td {
+        font-size: 12px;
+        padding: 7px;
+    }
+
+
+    /* ================= CHARGES ================= */
+
+    .charges-title {
+        font-size: 18px;
+        margin-bottom: 7px;
+    }
+
+    .charges-table {
+        width: 100%;
+    }
+
+    .charges-table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+
+    /* ================= PAYABLE ================= */
+
+    .amount-payable {
+        width: 100%;
+        margin-top: 15px;
+        padding: 10px;
+        font-size: 17px;
+        border-width: 2px;
+        box-sizing: border-box;
+    }
+
+
+    /* ================= SIGNATURES ================= */
+
+    .signatures {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 45px;
+    }
+
+    .signatures div {
+        width: 50%;
+        font-size: 11px;
+    }
+
+
+    /* ================= BACK BUTTON ================= */
+
+    .back-btn {
+        width: 100%;
+        margin: 25px auto 0;
+        padding: 12px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE SCREEN
+   ========================================================= */
+
+@media screen and (max-width: 380px) {
+
+    .print-container {
+        padding: 8px;
+    }
+
+
+    /* ================= TITLE ================= */
+
+    .title {
+        font-size: 20px;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header p {
+        font-size: 12px;
+    }
+
+
+    /* ================= ITEMS ================= */
+
+    .items-table th,
+    .items-table td {
+        font-size: 10px;
+        padding: 4px;
+    }
+
+
+    /* ================= SUMMARY ================= */
+
+    .summary-table td {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+
+    /* ================= CHARGES ================= */
+
+    .charges-table td {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+
+    /* ================= PAYABLE ================= */
+
+    .amount-payable {
+        font-size: 15px;
+        padding: 8px;
+    }
+
+
+    /* ================= SIGNATURES ================= */
+
+    .signatures div {
+        font-size: 10px;
+    }
+
+
+    /* ================= BUTTON ================= */
+
+    .back-btn {
+        font-size: 15px;
+        padding: 11px;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+   DO NOT CHANGE
+   ========================================================= */
 
 @page {
     size: A4 portrait;
