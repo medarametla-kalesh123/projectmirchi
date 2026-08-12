@@ -1,8 +1,6 @@
 import os
-import smtplib
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import resend
 
 from dotenv import load_dotenv
 
@@ -15,11 +13,10 @@ load_dotenv()
 
 
 # =========================================================
-# GMAIL SETTINGS
+# RESEND SETTINGS
 # =========================================================
 
-GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
-GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
 FRONTEND_URL = os.getenv(
     "FRONTEND_URL",
@@ -38,18 +35,20 @@ def send_password_reset_email(
 ):
 
     # -----------------------------------------------------
-    # Check Gmail configuration
+    # Check Resend configuration
     # -----------------------------------------------------
 
-    if not GMAIL_USERNAME:
+    if not RESEND_API_KEY:
         raise ValueError(
-            "GMAIL_USERNAME is not configured"
+            "RESEND_API_KEY is not configured"
         )
 
-    if not GMAIL_APP_PASSWORD:
-        raise ValueError(
-            "GMAIL_APP_PASSWORD is not configured"
-        )
+
+    # -----------------------------------------------------
+    # Configure Resend
+    # -----------------------------------------------------
+
+    resend.api_key = RESEND_API_KEY
 
 
     # -----------------------------------------------------
@@ -298,56 +297,16 @@ Mirchi Trading Password Reset
 
 
     # =====================================================
-    # CREATE EMAIL
+    # SEND EMAIL USING RESEND
     # =====================================================
 
-    message = MIMEMultipart("alternative")
-
-    message["Subject"] = subject
-
-    message["From"] = GMAIL_USERNAME
-
-    message["To"] = email
-
-
-    # Plain text
-
-    message.attach(
-        MIMEText(
-            text_body,
-            "plain"
-        )
-    )
+    params = {
+        "from": "Mirchi Trading <onboarding@resend.dev>",
+        "to": [email],
+        "subject": subject,
+        "text": text_body,
+        "html": html_body
+    }
 
 
-    # HTML
-
-    message.attach(
-        MIMEText(
-            html_body,
-            "html"
-        )
-    )
-
-
-    # =====================================================
-    # SEND USING GMAIL SMTP
-    # =====================================================
-
-    with smtplib.SMTP(
-        "smtp.gmail.com",
-        587
-    ) as server:
-
-        server.starttls()
-
-        server.login(
-            GMAIL_USERNAME,
-            GMAIL_APP_PASSWORD
-        )
-
-        server.sendmail(
-            GMAIL_USERNAME,
-            email,
-            message.as_string()
-        )
+    resend.Emails.send(params)

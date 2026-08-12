@@ -1,4 +1,3 @@
-```python
 import os
 
 from sqlalchemy import create_engine
@@ -9,16 +8,24 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # DATABASE URL
 # =========================================================
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("MYSQL_PUBLIC_URL")
 
 if not DATABASE_URL:
     raise RuntimeError(
-        "DATABASE_URL environment variable is not set."
+        "MYSQL_PUBLIC_URL environment variable is not set."
     )
 
 
-# Railway may provide mysql://
-# SQLAlchemy + PyMySQL requires mysql+pymysql://
+# =========================================================
+# MYSQL DRIVER
+# =========================================================
+
+# Railway provides:
+# mysql://username:password@host:port/database
+#
+# SQLAlchemy with PyMySQL uses:
+# mysql+pymysql://username:password@host:port/database
+
 if DATABASE_URL.startswith("mysql://"):
     DATABASE_URL = DATABASE_URL.replace(
         "mysql://",
@@ -28,7 +35,7 @@ if DATABASE_URL.startswith("mysql://"):
 
 
 # =========================================================
-# ENGINE
+# DATABASE ENGINE
 # =========================================================
 
 engine = create_engine(
@@ -39,13 +46,13 @@ engine = create_engine(
 
 
 # =========================================================
-# SESSION
+# DATABASE SESSION
 # =========================================================
 
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
-    bind=engine,
+    bind=engine
 )
 
 
@@ -65,6 +72,6 @@ def get_db():
 
     try:
         yield db
+
     finally:
         db.close()
-
