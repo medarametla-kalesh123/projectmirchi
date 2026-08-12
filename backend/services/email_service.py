@@ -1,6 +1,9 @@
 import os
+import smtplib
 
-import resend
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from urllib.parse import quote
 
 from dotenv import load_dotenv
 
@@ -13,10 +16,11 @@ load_dotenv()
 
 
 # =========================================================
-# RESEND SETTINGS
+# GMAIL SETTINGS
 # =========================================================
 
-RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
 
 FRONTEND_URL = os.getenv(
     "FRONTEND_URL",
@@ -34,43 +38,51 @@ def send_password_reset_email(
     reset_token: str
 ):
 
-    # -----------------------------------------------------
-    # Check Resend configuration
-    # -----------------------------------------------------
+    # =====================================================
+    # CHECK CONFIGURATION
+    # =====================================================
 
-    if not RESEND_API_KEY:
+    if not GMAIL_USERNAME:
         raise ValueError(
-            "RESEND_API_KEY is not configured"
+            "GMAIL_USERNAME is not configured"
+        )
+
+    if not GMAIL_APP_PASSWORD:
+        raise ValueError(
+            "GMAIL_APP_PASSWORD is not configured"
+        )
+
+    if not FRONTEND_URL:
+        raise ValueError(
+            "FRONTEND_URL is not configured"
         )
 
 
-    # -----------------------------------------------------
-    # Configure Resend
-    # -----------------------------------------------------
+    # =====================================================
+    # CREATE RESET LINK
+    # =====================================================
 
-    resend.api_key = RESEND_API_KEY
-
-
-    # -----------------------------------------------------
-    # Create reset link
-    # -----------------------------------------------------
+    encoded_token = quote(
+        reset_token,
+        safe=""
+    )
 
     reset_link = (
         f"{FRONTEND_URL}/reset-password"
-        f"?token={reset_token}"
+        f"?token={encoded_token}"
     )
 
 
-    # -----------------------------------------------------
-    # Email subject
-    # -----------------------------------------------------
+    # =====================================================
+    # EMAIL SUBJECT
+    # =====================================================
 
     subject = "Mirchi Trading - Password Reset"
 
 
-    # -----------------------------------------------------
-    # Plain text email
-    # -----------------------------------------------------
+    # =====================================================
+    # PLAIN TEXT EMAIL
+    # =====================================================
 
     text_body = f"""
 Hello {username},
@@ -95,20 +107,20 @@ Mirchi Trading
 """
 
 
-    # -----------------------------------------------------
-    # HTML email
-    # -----------------------------------------------------
+    # =====================================================
+    # HTML EMAIL
+    # =====================================================
 
     html_body = f"""
 <html>
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>
-Mirchi Trading Password Reset
-</title>
+    <title>
+        Mirchi Trading Password Reset
+    </title>
 
 </head>
 
@@ -297,16 +309,101 @@ Mirchi Trading Password Reset
 
 
     # =====================================================
-    # SEND EMAIL USING RESEND
+    # CREATE EMAIL MESSAGE
     # =====================================================
 
-    params = {
-        "from": "Mirchi Trading <onboarding@resend.dev>",
-        "to": [email],
-        "subject": subject,
-        "text": text_body,
-        "html": html_body
-    }
+    message = MIMEMultipart("alternative")
+
+    message["Subject"] = subject
+    message["From"] = GMAIL_USERNAME
+    message["To"] = email
 
 
-    resend.Emails.send(params)
+    # =====================================================
+    # ATTACH PLAIN TEXT
+    # =====================================================
+
+    message.attach(
+        MIMEText(
+            text_body,
+            "plain",
+            "utf-8"
+        )
+    )
+
+
+    # =====================================================
+    # ATTACH HTML
+    # =====================================================
+
+    message.attach(
+        MIMEText(
+            html_body,
+            "html",
+            "utf-8"
+        )
+    )
+
+
+    # =====================================================
+    # SEND EMAIL USING GMAIL SMTP
+    # =====================================================
+
+    try:
+
+        with smtplib.SMTP(
+            "smtp.gmail.com",
+            587,
+            timeout=30
+        ) as server:
+
+            # Start encrypted connection
+            server.starttls()
+
+            # Login using Gmail App Password
+            server.login(
+                GMAIL_USERNAME,
+                GMAIL_APP_PASSWORD
+            )
+
+            # Send email
+            server.sendmail(
+                GMAIL_USERNAME,
+                email,
+                message.as_string()
+            )
+
+
+    # =====================================================
+    # GMAIL AUTHENTICATION ERROR
+    # =====================================================
+
+    except smtplib.SMTPAuthenticationError as e:
+
+        raise ValueError(
+            "Gmail authentication failed. "
+            "Check GMAIL_USERNAME and GMAIL_APP_PASSWORD. "
+            "Make sure you are using a Gmail App Password."
+        ) from e
+
+
+    # =====================================================
+    # OTHER SMTP ERROR
+    # =====================================================
+
+    except smtplib.SMTPException as e:
+
+        raise ValueError(
+            f"Failed to send password reset email: {str(e)}"
+        ) from e
+
+
+    # =====================================================
+    # GENERAL ERROR
+    # =====================================================
+
+    except Exception as e:
+
+        raise ValueError(
+            f"Email sending failed: {str(e)}"
+        ) from e
