@@ -32,7 +32,7 @@ def create_katalist1(db: Session, kata: KataList1Create):
 
     db_kata = KataList1(
     entry_no=entry_no,
-    entry_date=date.today(),
+    entry_date=kata.entry_date,
     company=kata.company,
     farmer_patti=kata.farmer_patti,
     trader_patti=kata.trader_patti,
