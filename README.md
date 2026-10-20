@@ -164,15 +164,21 @@ The application brings important chilli trading operations into a single digital
 - Email: medarametlakalesh@gmail.com
 
 - 
+
 ## Application Screenshots
 
+### Screenshot 1
 ![Screenshot 1](Screenshot%202026-09-23%20165806.png)
 
+### Screenshot 2
 ![Screenshot 2](Screenshot%202026-09-21%20120502.png)
 
+### Screenshot 3
 ![Screenshot 3](Screenshot%202026-09-21%20120101.png)
 
+### Screenshot 4
 ![Screenshot 4](Screenshot%202026-09-21%20115723.png)
 
+### Screenshot 5
 ![Screenshot 5](Screenshot%202026-09-21%20115054.png)
 
